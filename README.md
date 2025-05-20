@@ -32,7 +32,7 @@ Repositório do desafio técnico para vaga de Desenvolvedora Pleno. O projeto co
 
 - React
 - Node.js + Express
-- PostgreSQL (via Prisma) ou MongoDB (via Mongoose)
+- PostgreSQL (via Prisma) ou MongoDB (via Mongoose) - ainda será definido
 - Docker
 - Git + Gitflow
 - Jest
