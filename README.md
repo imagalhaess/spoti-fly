@@ -20,8 +20,8 @@ O Spoti-Fly é uma plataforma de streaming desenvolvida como parte de um desafio
 
 ## Funcionalidades previstas
 
-- [x] Listar playlists
-- [x] Criar nova playlist
+- [ ] Listar playlists
+- [ ] Criar nova playlist
 - [ ] Adicionar músicas a uma playlist
 - [ ] Visualizar detalhes de uma playlist
 - [ ] Consumir dados de uma API externa (letras ou capas)
@@ -58,14 +58,6 @@ O Spoti-Fly é uma plataforma de streaming desenvolvida como parte de um desafio
 ## Como rodar o projeto (em breve)
 
 Instruções para rodar localmente com ou sem Docker serão adicionadas na medida em que os módulos forem construídos.
-=======
-- React
-- Node.js + Express
-- PostgreSQL (via Prisma) ou MongoDB (via Mongoose) - ainda será definido
-- Docker
-- Git + Gitflow
-- Jest
-
 
 ---
 
