@@ -20,8 +20,8 @@ O Spoti-Fly é uma plataforma de streaming desenvolvida como parte de um desafio
 
 ## Funcionalidades previstas
 
-- [x] Listar playlists
-- [x] Criar nova playlist
+- [ ] Listar playlists
+- [ ] Criar nova playlist
 - [ ] Adicionar músicas a uma playlist
 - [ ] Visualizar detalhes de uma playlist
 - [ ] Consumir dados de uma API externa (letras ou capas)
