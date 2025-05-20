@@ -58,6 +58,14 @@ O Spoti-Fly é uma plataforma de streaming desenvolvida como parte de um desafio
 ## Como rodar o projeto (em breve)
 
 Instruções para rodar localmente com ou sem Docker serão adicionadas na medida em que os módulos forem construídos.
+=======
+- React
+- Node.js + Express
+- PostgreSQL (via Prisma) ou MongoDB (via Mongoose) - ainda será definido
+- Docker
+- Git + Gitflow
+- Jest
+
 
 ---
 
