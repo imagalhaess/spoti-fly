@@ -91,7 +91,7 @@ npm run dev
 
 ## API – Rotas Implementadas
 
-### ▶ Playlists
+### Playlists
 
 | Método | Rota                | Descrição                         |
 |--------|---------------------|-----------------------------------|
