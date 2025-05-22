@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const { getPlaylists } = require('../controllers/playlistController');
+const { getPlaylists, createPlaylist, adicionarMusica } = require('../controllers/playlistController');
 
 router.get('/playlists', getPlaylists); // Define a rota para obter playlists
-// e associa a função getPlaylists do controlador
+router.post('/playlists', createPlaylist); // Define a rota para criar playlists 
+router.post('/playlists/:id/musicas', adicionarMusica); // Define a rota para adicionar músicas
 
 module.exports = router; // Exporta o roteador para ser usado no arquivo principal
 // do servidor
