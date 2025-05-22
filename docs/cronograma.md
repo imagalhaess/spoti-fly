@@ -1,53 +1,80 @@
-# Plano de Ação por Dia – Spoti-Fly
 
-Este cronograma detalha a distribuição do desenvolvimento ao longo dos 5 dias do desafio técnico.
+# Cronograma Técnico – Spoti-Fly
 
----
-
-## Dia 1 – Organização e Frontend Inicial
-
-- [x] Criar repositório GitHub com estrutura de branches
-- [x] Criar pastas `frontend/`, `backend/`, `docs/`, `docker/`
-- [x] Iniciar projeto React com Vite
-- [x] Instalar dependências iniciais
-- [x] Estruturar pastas: `/components`, `/pages`, `/routes`, `/services`
-- [x] Configurar React Router DOM
-- [x] Criar páginas base: `Home`, `CriarPlaylist`
+Organização por etapas (dias) para o desenvolvimento do projeto com base nos requisitos técnicos e integrações planejadas.
 
 ---
 
-## Dia 2 – Backend com Node.js e PostgreSQL
+## Dia 1 – Estrutura Inicial do Projeto
 
-- [ ] Iniciar projeto com `npm init` na pasta `backend`
-- [ ] Instalar dependências: `express`, `pg`, `dotenv`, `nodemon`
-- [ ] Criar estrutura de pastas: `/routes`, `/controllers`, `/models`, `/config`, `/database`
-- [ ] Configurar conexão com banco PostgreSQL (usando `dotenv`)
-- [ ] Criar primeiros endpoints da API: `GET` e `POST` para playlists
-
----
-
-## Dia 3 – Relacionamentos e Integração API
-
-- [ ] Criar entidade `Musica` e integrar com `Playlist`
-- [ ] Criar rotas para adicionar/remover músicas
-- [ ] Integrar frontend com backend via `axios`
-- [ ] Exibir playlists reais na tela
+- [x] Criar repositório GitHub
+- [x] Criar pastas `frontend/`, `backend/`, `docs/`
+- [x] Configurar Gitflow: `main`, `develop`, `feature/*`
+- [x] Iniciar README técnico no projeto
+- [x] Estruturar documentação: cronograma, rotas e arquitetura
 
 ---
 
-## Dia 4 – Autenticação, Favoritos e Busca
+## Dia 2 – Conexão com o Banco de Dados
 
-- [ ] Implementar login com JWT (token)
-- [ ] Proteger rotas da API
-- [ ] Criar rota de favoritos e buscar músicas
-- [ ] Exibir músicas favoritas e resultados no frontend
+- [x] Criar banco PostgreSQL local
+- [x] Criar arquivo `.env` com `DATABASE_URL`
+- [x] Criar `db.js` com pool de conexão
+- [x] Testar conexão com mensagem de sucesso/erro
+- [x] Criar rota GET `/api/playlists`
+- [x] Criar estrutura de rotas e controllers
+- [x] Testar com Insomnia
 
 ---
 
-## Dia 5 – Docker, Testes e Entrega
+## Dia 3 – Criação de Playlists e Integração com Deezer
+
+- [x] Criar rota POST `/api/playlists` para salvar playlists no banco
+- [x] Criar tabela `musicas` com chave estrangeira `playlist_id`
+- [x] Instalar `axios` para consumo de API externa
+- [x] Criar rota POST `/api/playlists/:id/musicas`
+- [x] Buscar música na API do Deezer e salvar no banco
+- [x] Testar com Insomnia
+- [x] Documentar funcionalidades implementadas
+
+---
+
+## Dia 4 – Listagem de Músicas
+
+- [ ] Criar rota GET `/api/playlists/:id/musicas`
+- [ ] Buscar músicas associadas a uma playlist no banco
+- [ ] Testar com Insomnia
+- [ ] Integrar frontend para exibir músicas por playlist
+- [ ] Atualizar documentação e README
+
+---
+
+## Dia 5 – Autenticação e Funcionalidades Avançadas
+
+- [ ] Implementar login com JWT
+- [ ] Criar middleware de autenticação
+- [ ] Proteger rotas sensíveis
+- [ ] Criar funcionalidade de favoritos
+- [ ] Criar rota de favoritos (GET e POST)
+- [ ] Exibir músicas favoritas no frontend
+
+---
+
+## Docker e Ambiente
 
 - [ ] Criar `Dockerfile` para frontend e backend
-- [ ] Criar `docker-compose.yml` para orquestrar tudo
-- [ ] Criar testes com `Jest` para rotas do backend
-- [ ] Finalizar documentação no README
-- [ ] Fazer deploy ou gravação de vídeo demonstrativo (opcional)
+- [ ] Criar `docker-compose.yml` para orquestrar backend, frontend e banco
+- [ ] Testar build completo com `docker-compose up`
+
+---
+
+## Testes Automatizados
+
+- [ ] Instalar e configurar Jest
+- [ ] Criar testes unitários para rota `/playlists`
+- [ ] Criar teste de integração para POST + GET
+- [ ] Validar cobertura mínima de 25%
+
+---
+
+Última atualização: 22/05/2025
