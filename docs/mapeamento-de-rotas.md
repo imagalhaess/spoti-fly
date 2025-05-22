@@ -1,63 +1,94 @@
-# Mapeamento de Funcionalidades e Rotas – Spoti-Fly 
 
-Este documento organiza as principais ações do usuário, suas rotas no frontend e os endpoints correspondentes no backend.
+# Mapeamento de Rotas – Spoti-Fly
 
----
-
-## Funcionalidades principais
-
-| Ação do usuário            | Descrição |
-|----------------------------|-----------|
-| Ver playlists              | Listagem geral de playlists |
-| Criar playlist             | Formulário para criar uma nova playlist |
-| Ver detalhes da playlist   | Página com músicas de uma playlist |
-| Adicionar música           | Inserir música em uma playlist |
-| Remover música             | Deletar uma música da playlist |
-| Reproduzir música          | Tocar uma música da playlist |
-| Parar música               | Parar a reprodução atual |
-| Buscar música              | Encontrar músicas por nome/artista |
-| Favoritar música           | Marcar uma música como favorita |
-| Compartilhar playlist      | Copiar link ou gerar embed |
-| Login/Logout               | Entrar e sair da conta do usuário |
+Documentação das rotas da API criadas até o momento no backend do projeto Spoti-Fly.
 
 ---
 
-## Rotas do Frontend (React)
+## Playlists
 
-| Página                     | Rota                       |
-|---------------------------|----------------------------|
-| Página inicial            | `/playlists`              |
-| Criar playlist            | `/criar`                  |
-| Detalhes da playlist      | `/playlists/:id`          |
-| Tocar música específica   | `/playlists/:id?play=x`   |
-| Buscar músicas            | `/buscar?q=...`           |
-| Ver favoritas             | `/favoritas`              |
-| Login                     | `/login`                  |
+### GET /api/playlists
 
----
+**Descrição:**  
+Lista todas as playlists cadastradas no banco de dados.
 
-## Endpoints da API (Node.js/Express)
+**Resposta esperada:**
 
-| Ação                      | Método | Endpoint                                 |
-|---------------------------|--------|------------------------------------------|
-| Listar playlists          | GET    | `/api/playlists`                         |
-| Criar nova playlist       | POST   | `/api/playlists`                         |
-| Buscar playlist por ID    | GET    | `/api/playlists/:id`                     |
-| Deletar playlist          | DELETE | `/api/playlists/:id`                     |
-| Adicionar música          | POST   | `/api/playlists/:id/musicas`             |
-| Remover música            | DELETE | `/api/playlists/:id/musicas/:musicaId`   |
-| Buscar músicas            | GET    | `/api/musicas?query=...`                 |
-| Reproduzir música         | GET    | `/api/musicas/:id/stream`                |
-| Favoritar música          | POST   | `/api/musicas/:id/favoritar`             |
-| Compartilhar playlist     | POST   | `/api/playlists/:id/compartilhar`        |
-| Login                     | POST   | `/api/auth/login`                        |
-| Ver perfil do usuário     | GET    | `/api/usuario/me`                        |
+```json
+[
+  {
+    "id": 1,
+    "nome": "Favoritas",
+    "criado_em": "2025-05-21T22:10:45.000Z"
+  }
+]
+```
 
 ---
 
-## Observações
+### POST /api/playlists
 
-- `:id` e `:musicaId` são parâmetros dinâmicos
-- O backend pode aplicar autenticação JWT para rotas protegidas
-- O frontend pode usar query params (`?play=` ou `?q=`) para funcionalidades pontuais
+**Descrição:**  
+Cria uma nova playlist com o nome enviado no corpo da requisição.
 
+**Body esperado:**
+
+```json
+{
+  "nome": "Minhas Músicas"
+}
+```
+
+**Resposta esperada:**
+
+```json
+{
+  "id": 2,
+  "nome": "Minhas Músicas",
+  "criado_em": "2025-05-22T18:42:00.000Z"
+}
+```
+
+---
+
+## Músicas
+
+### POST /api/playlists/:id/musicas
+
+**Descrição:**  
+Busca uma música na API do Deezer usando o termo enviado no corpo da requisição e a adiciona à playlist correspondente (`:id`).
+
+**Body esperado:**
+
+```json
+{
+  "busca": "Shape of You"
+}
+```
+
+**Resposta esperada:**
+
+```json
+{
+  "id": 7,
+  "playlist_id": 2,
+  "titulo": "Shape of You",
+  "artista": "Ed Sheeran",
+  "capa_url": "https://...",
+  "deezer_id": 3135556,
+  "criado_em": "2025-05-22T18:50:00.000Z"
+}
+```
+
+---
+
+## Rotas planejadas
+
+- `GET /api/playlists/:id/musicas` – Listar todas as músicas de uma playlist
+- `POST /api/auth/login` – Autenticação com JWT
+- `POST /api/playlists/:id/favoritas` – Adicionar música aos favoritos
+- `GET /api/favoritas` – Listar músicas favoritas
+
+---
+
+Última atualização: 22/05/2025
