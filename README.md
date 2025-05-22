@@ -1,96 +1,126 @@
+
 # Spoti-Fly
 
-O Spoti-Fly é uma plataforma de streaming desenvolvida como parte de um desafio técnico para vaga de desenvolvedora pleno. A aplicação tem como objetivo oferecer uma experiência simples de gerenciamento de playlists de músicas, com frontend em React, backend em Node.js, banco de dados relacional e funcionalidades completas de CRUD.
-
-> O projeto também é uma oportunidade prática de aplicar conhecimentos de arquitetura de software, Gitflow, testes automatizados, containerização com Docker e consumo de API externa.
-
----
-
-## Tecnologias e Ferramentas
-
-- React (Vite + React Router)
-- Node.js com Express
-- PostgreSQL com Prisma ORM
-- Docker e Docker Compose
-- Git e Gitflow
-- Jest (testes unitários e integração)
-- API externa (Lyrics.ovh ou Deezer API)
+Spoti-Fly é uma plataforma web de gerenciamento de playlists e músicas, inspirada em sistemas de streaming.  
+O projeto inclui frontend com React, backend com Node.js + Express, banco de dados PostgreSQL e integração com a API pública do Deezer.
 
 ---
 
-## Funcionalidades previstas
+## Tecnologias Utilizadas
 
-- [ ] Listar playlists
-- [ ] Criar nova playlist
-- [ ] Adicionar músicas a uma playlist
-- [ ] Visualizar detalhes de uma playlist
-- [ ] Consumir dados de uma API externa (letras ou capas)
-- [ ] Realizar login e proteger rotas com JWT
-- [ ] Dockerizar aplicação (frontend + backend + banco)
-- [ ] Cobertura de testes acima de 25%
+### Backend
+- Node.js
+- Express
+- PostgreSQL
+- pg (node-postgres)
+- dotenv
+- axios
+
+### Frontend
+- React (com Vite)
+- React Router DOM
+- Axios
+
+### DevTools
+- Insomnia (testes de API)
+- Git + GitHub (Gitflow)
+- pgAdmin (administração do banco)
+- Docker (em breve)
+- Jest (em breve)
 
 ---
 
-## Estrutura do projeto
+## Estrutura de Pastas
 
 ```
-.
-├── frontend         # Aplicação React
-│   ├── src
-│   │   ├── components
-│   │   ├── pages
-│   │   └── routes
-│   └── ...
-├── backend          # API Node.js
-│   ├── src
-│   │   ├── controllers
-│   │   ├── routes
-│   │   ├── models
-│   │   └── middlewares
-│   └── ...
-├── db               # Scripts e seed do banco
-├── docs             # Documentação e prints
+spoti-fly/
+├── backend/
+│   ├── src/
+│   │   ├── config/
+│   │   ├── controllers/
+│   │   ├── routes/
+│   │   └── index.js
+│   └── .env
+├── frontend/
+│   ├── src/
+│   │   ├── components/
+│   │   ├── pages/
+│   │   ├── services/
+│   │   └── routes/
+│   └── main.jsx
+├── docs/
+│   ├── estrutura.md
+│   ├── cronograma.md
+│   └── mapeamento-de-rotas.md
 └── README.md
 ```
 
 ---
 
-## Como rodar o projeto (em breve)
+## Como Rodar o Projeto
 
-Instruções para rodar localmente com ou sem Docker serão adicionadas na medida em que os módulos forem construídos.
+### Pré-requisitos
+- Node.js
+- PostgreSQL
+- npm
 
----
-
-## Fluxo Git com Gitflow
-
-- `main`: branch de produção (entregas finalizadas)
-- `develop`: branch de desenvolvimento principal
-- `feature/*`: branches por funcionalidade
-- `bugfix/*`, `hotfix/*`: correções específicas
-
-Exemplo de criação de branch:
+### Backend
 
 ```bash
-git checkout -b feature/frontend-setup
+cd backend
+npm install
+npm run dev
+```
+
+Configure o `.env`:
+
+```
+DATABASE_URL=postgres://usuario:senha@localhost:5432/spotifly
+PORT=5000
+```
+
+### Frontend
+
+```bash
+cd frontend
+npm install
+npm run dev
 ```
 
 ---
 
-## Plano de Ação (Cronograma de Execução)
+## API – Rotas Implementadas
 
-| Etapa | Descrição                                                                         |
-| ----- | --------------------------------------------------------------------------------- |
-| Dia 1 | Setup do projeto, criação do repositório, estrutura base do frontend (React)      |
-| Dia 2 | Backend com Node.js + Express, definição das rotas, modelo de dados inicial       |
-| Dia 3 | Banco de dados relacional, relacionamento entre entidades, integração com backend |
-| Dia 4 | Frontend: criação de formulários e listagem funcional com consumo da API          |
-| Dia 5 | Dockerização, testes com Jest, finalização da documentação e entrega              |
+### ▶ Playlists
+
+| Método | Rota                | Descrição                         |
+|--------|---------------------|-----------------------------------|
+| GET    | `/api/playlists`    | Lista todas as playlists          |
+| POST   | `/api/playlists`    | Cria uma nova playlist            |
+
+### Músicas
+
+| Método | Rota                             | Descrição                            |
+|--------|----------------------------------|----------------------------------------|
+| POST   | `/api/playlists/:id/musicas`     | Busca uma música no Deezer e adiciona à playlist |
+
+---
+
+## Status Atual
+
+- [x] Conexão com PostgreSQL via `pg`
+- [x] Rota de listagem e criação de playlists
+- [x] Integração com API Deezer para adicionar músicas
+- [x] Estrutura de pastas com controllers, routes e config
+- [x] Documentação técnica (`/docs`)
+- [ ] Listar músicas da playlist
+- [ ] Autenticação com JWT
+- [ ] Docker e testes
 
 ---
 
-## Organização e Kanban
+## Desenvolvido por
 
-Todas as tarefas do projeto estão organizadas no GitHub Projects:  
-🔗 [Acesse o Quadro de Tarefas](https://github.com/imagalhaess/spoti-fly/projects?query=is%3Aopen)
-
----
+Isabela Magalhães  
+Mentoria @ Synapse.AI  
+2025 
