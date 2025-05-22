@@ -1,58 +1,93 @@
-# Estrutura do Projeto e Gitflow – Spoti-Fly
 
-Este documento detalha como está organizada a estrutura de diretórios do projeto, bem como o fluxo de versionamento.
+# Estrutura do Projeto – Spoti-Fly
+
+Este documento descreve a estrutura de pastas, organização de arquivos e camadas utilizadas no projeto Spoti-Fly.
 
 ---
 
-## Estrutura de Pastas
+## Estrutura Geral de Pastas
 
 ```
 spoti-fly/
-├── backend/            # API Node.js + Express
+├── backend/
 │   ├── src/
-│   │   ├── controllers/
-│   │   ├── routes/
-│   │   ├── models/
 │   │   ├── config/
-│   │   ├── database/
+│   │   │   └── db.js
+│   │   ├── controllers/
+│   │   │   └── playlistController.js
+│   │   ├── routes/
+│   │   │   └── playlist.routes.js
 │   │   └── index.js
-├── frontend/           # Aplicação React
+│   ├── .env
+│   ├── package.json
+│   └── README.md
+│
+├── frontend/
 │   ├── public/
 │   ├── src/
 │   │   ├── components/
 │   │   ├── pages/
-│   │   ├── routes/
 │   │   ├── services/
+│   │   ├── routes/
 │   │   ├── App.jsx
 │   │   └── main.jsx
-├── docker/             # Arquivos de configuração do Docker
-│   ├── Dockerfile.backend
-│   ├── Dockerfile.frontend
-│   └── docker-compose.yml
-├── docs/               # Documentação técnica
-│   ├── README.md
-│   ├── mapeamento-rotas-spotifly.md
+│   ├── vite.config.js
+│   ├── package.json
+│   └── README.md
+│
+├── docs/
+│   ├── estrutura.md
 │   ├── cronograma.md
-│   └── estrutura.md
-└── README.md           # Apresentação do projeto (raiz)
+│   └── mapeamento-de-rotas.md
+│
+└── README.md
 ```
 
 ---
 
-## Fluxo de Versionamento com Gitflow
+## Backend
 
-| Tipo de branch     | Padrão                  | Uso |
-|--------------------|-------------------------|-----|
-| `main`             | `main`                  | Versão final |
-| `develop`          | `develop`               | Integração de funcionalidades |
-| `feature/*`        | `feature/playlist-crud` | Funcionalidades novas |
-| `bugfix/*`         | `bugfix/login-error`    | Correções |
-| `hotfix/*`         | `hotfix/producao`       | Urgências em produção |
+- **`src/config/db.js`**  
+  Configuração da conexão com o banco de dados PostgreSQL.
+
+- **`src/controllers/`**  
+  Contém a lógica das rotas (`GET`, `POST`, etc). Ex: `createPlaylist`, `adicionarMusica`.
+
+- **`src/routes/`**  
+  Define os caminhos das rotas e conecta com os controllers.
+
+- **`index.js`**  
+  Ponto de entrada do backend. Configura express, rotas e porta do servidor.
 
 ---
 
-## Regras
+## Frontend
 
-- Toda feature nova nasce a partir de `develop`
-- Merge para `main` só após validação e revisão
-- Commits com padrão semântico: `feat:`, `fix:`, `docs:`, `test:`, etc.
+- **`components/`**  
+  Componentes reutilizáveis (ex: CardPlaylist, Header...).
+
+- **`pages/`**  
+  Páginas principais (Home, PlaylistDetalhes, Login...).
+
+- **`services/`**  
+  Comunicação com a API (`axios`, chamadas externas).
+
+- **`routes/`**  
+  Definição das rotas do frontend (usando React Router DOM).
+
+- **`main.jsx` + `App.jsx`**  
+  Estrutura principal da aplicação React (configuração de rotas, layout).
+
+---
+
+## Documentação
+
+- **`/docs/`**  
+  Contém arquivos auxiliares com cronograma, mapeamento de rotas e estrutura técnica.
+
+- **`README.md`**  
+  Documentação principal do projeto (descrição, instalação, uso, rotas).
+
+---
+
+Última atualização: 22/05/2025
