@@ -39,17 +39,17 @@ Organização por etapas (dias) para o desenvolvimento do projeto com base nos r
 
 ---
 
-## Dia 4 – Listagem de Músicas
+## Dia 4 (Parte 1) – Listagem de Músicas
 
-- [ ] Criar rota GET `/api/playlists/:id/musicas`
-- [ ] Buscar músicas associadas a uma playlist no banco
-- [ ] Testar com Insomnia
-- [ ] Integrar frontend para exibir músicas por playlist
-- [ ] Atualizar documentação e README
+- [x] Criar rota GET `/api/playlists/:id/musicas`
+- [x] Buscar músicas associadas a uma playlist no banco
+- [x] Testar com Insomnia
+- [x] Integrar frontend para exibir músicas por playlist
+- [x] Atualizar documentação e README
 
 ---
 
-## Dia 5 – Autenticação e Funcionalidades Avançadas
+## Dia 4 (Parte 2) – Autenticação e Funcionalidades Avançadas
 
 - [ ] Implementar login com JWT
 - [ ] Criar middleware de autenticação
@@ -60,7 +60,7 @@ Organização por etapas (dias) para o desenvolvimento do projeto com base nos r
 
 ---
 
-## Docker e Ambiente
+## Dia 5 (Parte 1) - Docker e Ambiente
 
 - [ ] Criar `Dockerfile` para frontend e backend
 - [ ] Criar `docker-compose.yml` para orquestrar backend, frontend e banco
@@ -68,7 +68,7 @@ Organização por etapas (dias) para o desenvolvimento do projeto com base nos r
 
 ---
 
-## Testes Automatizados
+## Dia 5 (Parte 2) - Testes Automatizados
 
 - [ ] Instalar e configurar Jest
 - [ ] Criar testes unitários para rota `/playlists`
@@ -77,4 +77,4 @@ Organização por etapas (dias) para o desenvolvimento do projeto com base nos r
 
 ---
 
-Última atualização: 22/05/2025
+Última atualização: 23/05/2025

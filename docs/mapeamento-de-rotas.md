@@ -82,13 +82,35 @@ Busca uma música na API do Deezer usando o termo enviado no corpo da requisiç�
 
 ---
 
+### GET /api/playlists/:id/musicas
+
+**Descrição:**  
+Lista todas as músicas vinculadas a uma playlist específica.
+
+**Resposta esperada:**
+
+```json
+[
+  {
+    "id": 4,
+    "playlist_id": 1,
+    "titulo": "Oceans",
+    "artista": "Hillsong United",
+    "capa_url": "https://...",
+    "deezer_id": 123456,
+    "criado_em": "2025-05-22T14:45:00.000Z"
+  }
+]
+```
+
+---
+
 ## Rotas planejadas
 
-- `GET /api/playlists/:id/musicas` – Listar todas as músicas de uma playlist
 - `POST /api/auth/login` – Autenticação com JWT
 - `POST /api/playlists/:id/favoritas` – Adicionar música aos favoritos
 - `GET /api/favoritas` – Listar músicas favoritas
 
 ---
 
-Última atualização: 22/05/2025
+Última atualização: 23/05/2025
