@@ -121,6 +121,5 @@ npm run dev
 
 ## Desenvolvido por
 
-Isabela Magalhães  
-Mentoria @ Synapse.AI  
+Isabela Magalhães    
 2025 
