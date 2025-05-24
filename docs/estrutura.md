@@ -15,8 +15,10 @@ spoti-fly/
 │   │   │   └── db.js
 │   │   ├── controllers/
 │   │   │   └── playlistController.js
+|   |   |   |__ usuarioController.js
 │   │   ├── routes/
-│   │   │   └── playlist.routes.js
+│   │   │   └── playlistRoutes.js
+|   |   |   |__ usuarioRoutes.js 
 │   │   └── index.js
 │   ├── .env
 │   ├── package.json
