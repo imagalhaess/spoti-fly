@@ -78,5 +78,20 @@ async function getPlaylists(req, res) {
       }
     }
 
+// Função para buscar músicas de uma playlist específica
+async function getMusicasPorPlaylist(req, res) {
+      const playlistId = req.params.id; // Obtém o ID da playlist da requisição
+      try {
+        const result = await db.query(
+          'SELECT * FROM musicas WHERE playlist_id = $1 ORDER BY id',
+          [playlistId]
+        ); // Consulta as músicas da playlist no banco de dados
+        res.status(200).json(result.rows); // Retorna as músicas encontradas
+      } catch (error) {
+        console.error('Erro ao buscar músicas da playlist:', error); // Captura o erro
+        res.status(500).json({ error: 'Erro ao buscar as músicas da playlist' }); // Retorna erro pro front
+      }
+    }
 
-  module.exports = { createPlaylist, getPlaylists, adicionarMusica }; // Exporta todas as funções para serem usadas em outros arquivos
+
+  module.exports = { getPlaylists, createPlaylist, adicionarMusica, getMusicasPorPlaylist }; // Exporta a função getPlaylists para ser usada em outros arquivos

@@ -7,6 +7,10 @@ Este documento descreve a estrutura de pastas, organização de arquivos e camad
 
 ## Estrutura Geral de Pastas
 
+---
+
+## Raiz do projeto
+
 ```
 spoti-fly/
 ├── backend/
@@ -14,37 +18,41 @@ spoti-fly/
 │   │   ├── config/
 │   │   │   └── db.js
 │   │   ├── controllers/
-│   │   │   └── playlistController.js
-|   |   |   |__ usuarioController.js
+│   │   │   ├── playlistController.js
+│   │   │   └── usuarioController.js
+│   │   ├── middleware/
+│   │   │   └── authMiddleware.js
 │   │   ├── routes/
-│   │   │   └── playlistRoutes.js
-|   |   |   |__ usuarioRoutes.js 
+│   │   │   ├── playlist.routes.js
+│   │   │   └── usuario.routes.js
 │   │   └── index.js
 │   ├── .env
-│   ├── package.json
-│   └── README.md
+│   ├── .gitignore
+│   └── package.json
 │
 ├── frontend/
-│   ├── public/
 │   ├── src/
 │   │   ├── components/
 │   │   ├── pages/
-│   │   ├── services/
+│   │   │   ├── Login.jsx
+│   │   │   ├── Register.jsx
+│   │   │   ├── Home.jsx
+│   │   │   └── CriarPlaylist.jsx
 │   │   ├── routes/
+│   │   │   └── AppRoutes.jsx
+│   │   ├── services/
+│   │   │   └── api.js
 │   │   ├── App.jsx
 │   │   └── main.jsx
-│   ├── vite.config.js
-│   ├── package.json
-│   └── README.md
+│   ├── public/
+│   └── package.json
 │
 ├── docs/
 │   ├── estrutura.md
+│   ├── mapeamento-de-rotas.md
 │   ├── cronograma.md
-│   └── mapeamento-de-rotas.md
-│
-└── README.md
+│   └── readme.md
 ```
-
 ---
 
 ## Backend
@@ -91,5 +99,3 @@ spoti-fly/
   Documentação principal do projeto (descrição, instalação, uso, rotas).
 
 ---
-
-Última atualização: 22/05/2025

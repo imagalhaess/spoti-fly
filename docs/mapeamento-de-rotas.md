@@ -7,52 +7,48 @@ Documentação das rotas da API criadas até o momento no backend do projeto Spo
 
 ## Playlists
 
-### GET /api/playlists
+### `GET /api/playlists`
+Lista todas as playlists do usuário autenticado.
 
-**Descrição:**  
-Lista todas as playlists cadastradas no banco de dados.
+### `POST /api/playlists`
+Cria uma nova playlist.
 
----
+### `GET /api/playlists/:id/musicas`
+Lista todas as músicas de uma playlist específica.
 
-### POST /api/playlists
-
-**Descrição:**  
-Cria uma nova playlist com o nome enviado no corpo da requisição.
-
----
-
-## Músicas
-
-### POST /api/playlists/:id/musicas
-
-**Descrição:**  
-Busca uma música na API do Deezer usando o termo enviado no corpo da requisição e a adiciona à playlist correspondente (`:id`).
+### `POST /api/playlists/:id/musicas`
+Busca uma música via Deezer e adiciona à playlist.
 
 ---
 
-### GET /api/playlists/:id/musicas
+## Usuários
 
-**Descrição:**  
-Lista todas as músicas vinculadas a uma playlist específica.
+### `POST /api/usuarios/register`
+Cadastra novo usuário, retorna token JWT.
 
----
-
-## Autenticação
-
-### POST /api/usuarios/register
-
-**Descrição:**  
-Cria um novo usuário com os dados enviados (`nome`, `email`, `senha`).  
-A senha é criptografada com `bcrypt` e o backend retorna um token JWT válido por 2h.
+### `POST /api/usuarios/login`
+Realiza login, valida senha e retorna token JWT.
 
 ---
 
-## Rotas planejadas
+## Autenticação (JWT)
 
-- `POST /api/usuarios/login` – Autenticar usuário com JWT
-- `POST /api/playlists/:id/favoritas` – Adicionar música aos favoritos
-- `GET /api/favoritas` – Listar músicas favoritas
+- As rotas de playlists e músicas exigem token de autenticação.
+- Token deve ser passado no header:
+  ```
+  Authorization: Bearer SEU_TOKEN
+  ```
 
 ---
 
-Última atualização: 24/05/2025
+## Frontend (Telas)
+
+| Página             | Caminho               | Função                                 |
+|--------------------|------------------------|----------------------------------------|
+| Registro           | `/register`            | Formulário para criação de conta       |
+| Login              | `/login`               | Acesso com e-mail e senha              |
+| Home               | `/`                    | Lista de playlists + botão "criar"     |
+| Criar Playlist     | `/nova-playlist`       | Formulário para nova playlist          |
+| Adicionar Música   | `/playlists/:id/add`   | Busca e adiciona música via Deezer     |
+
+---
