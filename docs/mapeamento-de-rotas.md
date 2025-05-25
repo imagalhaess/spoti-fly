@@ -1,11 +1,10 @@
-
 # Mapeamento de Rotas – Spoti-Fly
 
-Documentação das rotas da API criadas até o momento no backend do projeto Spoti-Fly.
+Documentação das rotas da API criadas até o momento no backend do projeto Spoti-Fly, e das telas do frontend.
 
 ---
 
-## Playlists
+## Backend (API)
 
 ### `GET /api/playlists`
 Lista todas as playlists do usuário autenticado.
@@ -21,7 +20,7 @@ Busca uma música via Deezer e adiciona à playlist.
 
 ---
 
-## Usuários
+## Usuários (API)
 
 ### `POST /api/usuarios/register`
 Cadastra novo usuário, retorna token JWT.
@@ -35,20 +34,18 @@ Realiza login, valida senha e retorna token JWT.
 
 - As rotas de playlists e músicas exigem token de autenticação.
 - Token deve ser passado no header:
-  ```
-  Authorization: Bearer SEU_TOKEN
-  ```
+  ```
+  Authorization: Bearer SEU_TOKEN
+  ```
 
 ---
 
 ## Frontend (Telas)
 
-| Página             | Caminho               | Função                                 |
+| Página             | Caminho               | Função                                 |
 |--------------------|------------------------|----------------------------------------|
-| Registro           | `/register`            | Formulário para criação de conta       |
-| Login              | `/login`               | Acesso com e-mail e senha              |
-| Home               | `/`                    | Lista de playlists + botão "criar"     |
-| Criar Playlist     | `/nova-playlist`       | Formulário para nova playlist          |
-| Adicionar Música   | `/playlists/:id/add`   | Busca e adiciona música via Deezer     |
-
----
+| Registro           | `/register`            | Formulário para criação de conta       |
+| Login              | `/login`               | Acesso com e-mail e senha              |
+| Home               | `/`                    | Lista de playlists + botão "criar"     |
+| Criar Playlist     | `/criar-playlist`      | Formulário para nova playlist          |
+| Adicionar Música   | `/playlists/:id/adicionar-musica` | Busca e adiciona música via Deezer     |

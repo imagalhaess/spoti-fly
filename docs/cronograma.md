@@ -55,7 +55,7 @@ Planejamento e controle das entregas de backend no desafio técnico.
 
 ### Dia 5  – Finalização do Frontend, Dockerização e Orquestração
 
-- Criação das páginas homepage, cadastro e login
+- Criação das páginas home, cadastro, login, cria playlist e adicionar música
 - Criação da função global api.js com axios configurado com baseURL
 - Criação da navegação básica (React Router)
 - Criação de Dockerfile para backend e frontend

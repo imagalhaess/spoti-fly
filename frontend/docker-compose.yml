@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  # Serviço de Banco de Dados PostgreSQL
+  db:
+    image: postgres:15-alpine
+    container_name: spoti-fy-db
+    restart: always
+    environment: # Variáveis de ambiente para o PostgreSQL
+      # Essas variáveis são usadas para criar o banco de dados e o usuário
+      POSTGRES_DB: spotifly     
+      POSTGRES_USER: postgres  
+      POSTGRES_PASSWORD: 1713   
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  # Serviço de Backend (Node.js)
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: spoti-fy-backend
+    restart: always
+    ports:
+      - "5000:5000" 
+    environment: # Variáveis de ambiente para o backend
+      # A DATABASE_URL AQUI USA O NOME DO SERVIÇO 'db' como host
+      DATABASE_URL: postgresql://postgres:1713@db:5432/spotifly # 
+      PORT: 5000                                               
+      JWT_SECRET: KLt84mc9NdoDgsWjao7zE4Wpz4usGDwq            
+    depends_on:
+      - db
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+
+  # Serviço de Frontend (React)
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: spoti-fy-frontend
+    restart: always
+    ports:
+      - "5173:80" # Porta do host (seu PC) para a porta 80 do contêiner Nginx
+    depends_on:
+      - backend
+    environment:
+      # A URL da sua API no backend, vista pelo NAVEGADOR do usuário (via localhost)
+      # ATENÇÃO: A porta aqui deve ser a do HOST (5000), NÃO a interna do contêiner.
+      VITE_API_URL: http://localhost:5000 
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+
+volumes:
+  db_data:
