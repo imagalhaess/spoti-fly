@@ -1,26 +1,7 @@
 const db = require('../config/db'); // Importa a configuração do banco de dados
 const axios = require('axios'); // Importa o axios para fazer requisições HTTP
 
-
-async function getPlaylists(req, res) {
-  // Função para buscar todas as playlists do banco de dados
-  
-  try {
-    // Conecta ao banco de dados e executa a consulta
-    const result = await db.query('SELECT * FROM playlists ORDER BY id');
-    res.status(200).json(result.rows);
-    // Retorna o resultado da consulta como resposta
-    // com status 200 (OK) e o conteúdo em formato JSON
-  } 
-  
-  catch (error) {
-    // Se ocorrer um erro, captura e retorna uma resposta com status 500 (Erro Interno do Servidor)
-    console.error('Erro ao buscar playlists:', error);
-    res.status(500).json({ error: 'Erro ao buscar playlists' }); 
-  }
-}
-
-  async function createPlaylist(req, res) {
+async function createPlaylist(req, res) {
     // Função para criar uma nova playlist no banco de dados
     const { nome } = req.body; // Obtém o nome da playlist do corpo da requisição
 
@@ -43,6 +24,24 @@ async function getPlaylists(req, res) {
       res.status(500).json({ error: 'Erro ao criar playlist' }); // Retorna erro pro front
     }
   }
+
+async function getPlaylists(req, res) {
+  // Função para buscar todas as playlists do banco de dados
+  
+  try {
+    // Conecta ao banco de dados e executa a consulta
+    const result = await db.query('SELECT * FROM playlists ORDER BY id');
+    res.status(200).json(result.rows);
+    // Retorna o resultado da consulta como resposta
+    // com status 200 (OK) e o conteúdo em formato JSON
+  } 
+  
+  catch (error) {
+    // Se ocorrer um erro, captura e retorna uma resposta com status 500 (Erro Interno do Servidor)
+    console.error('Erro ao buscar playlists:', error);
+    res.status(500).json({ error: 'Erro ao buscar playlists' }); 
+  }
+}
   
   async function adicionarMusica(req, res) {
     // Função para adicionar uma música a uma playlist
@@ -79,21 +78,5 @@ async function getPlaylists(req, res) {
       }
     }
 
-    async function getMusicasPorPlaylist(req, res) {
-      // Função para obter todas as músicas de uma playlist
-      const playlistId = req.params.id; // Obtém o ID da playlist do corpo da requisição
 
-      try {
-        const result = await db.query(
-          'SELECT * FROM musicas WHERE playlist_id = $1 ORDER BY id',
-          [playlistId]
-        );
-        res.status(200).json(result.rows); // Retorna as músicas da playlist
-      } catch (error) {
-        console.error('Erro ao buscar músicas da playlist:', error); // Captura o erro
-        res.status(500).json({ error: 'Erro ao buscar músicas da playlist' }); // Retorna erro pro front
-      }
-    }
-
-
-  module.exports = { getPlaylists, createPlaylist, adicionarMusica, getMusicasPorPlaylist}; // Exporta a função getPlaylists para ser usada em outros arquivos
+  module.exports = { createPlaylist, getPlaylists, adicionarMusica }; // Exporta todas as funções para serem usadas em outros arquivos

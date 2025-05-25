@@ -1,80 +1,72 @@
 
 # Cronograma Técnico – Spoti-Fly
 
-Organização por etapas (dias) para o desenvolvimento do projeto com base nos requisitos técnicos e integrações planejadas.
+Planejamento e controle das entregas de backend no desafio técnico.
 
 ---
 
-## Dia 1 – Estrutura Inicial do Projeto
+### Dia 1 – Setup do Projeto
 
-- [x] Criar repositório GitHub
-- [x] Criar pastas `frontend/`, `backend/`, `docs/`
-- [x] Configurar Gitflow: `main`, `develop`, `feature/*`
-- [x] Iniciar README técnico no projeto
-- [x] Estruturar documentação: cronograma, rotas e arquitetura
-
----
-
-## Dia 2 – Conexão com o Banco de Dados
-
-- [x] Criar banco PostgreSQL local
-- [x] Criar arquivo `.env` com `DATABASE_URL`
-- [x] Criar `db.js` com pool de conexão
-- [x] Testar conexão com mensagem de sucesso/erro
-- [x] Criar rota GET `/api/playlists`
-- [x] Criar estrutura de rotas e controllers
-- [x] Testar com Insomnia
+- Estrutura inicial: frontend/, backend/, docker/
+- Configuração do backend com Node.js, Express, dotenv, nodemon
+- Projeto versionado com GitHub e Gitflow
+- README inicial criado
 
 ---
 
-## Dia 3 – Criação de Playlists e Integração com Deezer
+### Dia 2 – Playlists
 
-- [x] Criar rota POST `/api/playlists` para salvar playlists no banco
-- [x] Criar tabela `musicas` com chave estrangeira `playlist_id`
-- [x] Instalar `axios` para consumo de API externa
-- [x] Criar rota POST `/api/playlists/:id/musicas`
-- [x] Buscar música na API do Deezer e salvar no banco
-- [x] Testar com Insomnia
-- [x] Documentar funcionalidades implementadas
+- Criada tabela `playlists`
+- Rota GET /api/playlists – listar playlists
+- Rota POST /api/playlists – criar nova playlist
+- Testes com Insomnia
 
 ---
 
-## Dia 4 – Listagem de Músicas
+### Dia 3 – Integração com API do Deezer
 
-- [ ] Criar rota GET `/api/playlists/:id/musicas`
-- [ ] Buscar músicas associadas a uma playlist no banco
-- [ ] Testar com Insomnia
-- [ ] Integrar frontend para exibir músicas por playlist
-- [ ] Atualizar documentação e README
-
----
-
-## Dia 5 – Autenticação e Funcionalidades Avançadas
-
-- [ ] Implementar login com JWT
-- [ ] Criar middleware de autenticação
-- [ ] Proteger rotas sensíveis
-- [ ] Criar funcionalidade de favoritos
-- [ ] Criar rota de favoritos (GET e POST)
-- [ ] Exibir músicas favoritas no frontend
+- Criada tabela `musicas`
+- Rota POST /api/playlists/:id/musicas – busca música por nome e salva no banco
+- Testes e tratamento de erro
+- Documentação atualizada
 
 ---
 
-## Docker e Ambiente
+### Dia 4 (Parte 1) – Listagem de músicas por playlist
 
-- [ ] Criar `Dockerfile` para frontend e backend
-- [ ] Criar `docker-compose.yml` para orquestrar backend, frontend e banco
-- [ ] Testar build completo com `docker-compose up`
-
----
-
-## Testes Automatizados
-
-- [ ] Instalar e configurar Jest
-- [ ] Criar testes unitários para rota `/playlists`
-- [ ] Criar teste de integração para POST + GET
-- [ ] Validar cobertura mínima de 25%
+- Rota GET /api/playlists/:id/musicas
+- Listagem completa das músicas vinculadas a uma playlist
+- Atualização de mapeamento de rotas e estrutura
 
 ---
 
-Última atualização: 22/05/2025
+### Dia 4 (Parte 2) – Autenticação
+
+- Criada tabela `usuarios`
+- Criptografia de senha com bcrypt
+- Rota POST /api/usuarios/register – registro de usuário com geração de token JWT
+- Rota POST /api/usuarios/login – login e geração de token
+- Middleware de autenticação com JWT
+- Proteção de rotas
+- Testes e resposta com token
+- Documentação técnica salva
+
+---
+
+### Dia 5  – Dockerização e Orquestração
+
+- Criação de Dockerfile para backend e frontend
+- Criação de docker-compose.yml com PostgreSQL
+- Validação de funcionamento de todos os serviços juntos
+
+---
+
+### Dia 6  – Testes Automatizados e README.md final
+
+- Instalação e configuração de Jest
+- Criação de testes unitários e de integração (GET, POST)
+- Garantir cobertura de testes acima de 25%
+- README principal com instruções de instalação, execução e APIs
+- Prints da interface funcionando
+- Tecnologias usadas e decisões técnicas
+
