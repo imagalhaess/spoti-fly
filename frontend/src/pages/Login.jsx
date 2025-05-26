@@ -1,6 +1,6 @@
 import { useState } from "react";
-import api from "../services/api"; // ajuste o caminho conforme necessário
-import { useNavigate } from "react-router-dom";
+import api from "../services/api";
+import { useNavigate, Link } from "react-router-dom";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -8,25 +8,25 @@ export default function Login() {
   const navigate = useNavigate();
 
   async function handleLogin(e) {
-  e.preventDefault();
+    e.preventDefault();
 
-  try {
-    const response = await api.post("usuarios/login", {
-      email,
-      senha,
-    });
+    try {
+      const response = await api.post("usuarios/login", {
+        email,
+        senha,
+      });
 
-    const token = response.data.token;
-    console.log("Token recebido:", token);
+      const token = response.data.token;
+      console.log("Token recebido:", token);
 
-    localStorage.setItem("token", token);
-    navigate("/");
-  } catch (error) {
-    alert("Login falhou. Verifique suas credenciais.");
-    console.log(error.response?.data);
-    console.error("Erro ao fazer login:", error);
+      localStorage.setItem("token", token);
+      navigate("/");
+    } catch (error) {
+      alert("Login falhou. Verifique suas credenciais.");
+      console.log(error.response?.data);
+      console.error("Erro ao fazer login:", error);
+    }
   }
-}
   return (
     <div>
       <h1> Login </h1>
@@ -45,6 +45,9 @@ export default function Login() {
         />
         <button type="submit">Entrar</button>
       </form>
+      <p>
+        Não tem uma conta? <Link to="/register">Registre-se</Link>{" "}
+      </p>
     </div>
   );
 }

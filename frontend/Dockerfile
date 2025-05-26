@@ -1,20 +1,19 @@
 # frontend/Dockerfile
 
-# Estágio 1: Construção (Build)
-FROM node:18-alpine AS build
+FROM node:18
+
 WORKDIR /app
+
 COPY package*.json ./
-RUN npm install
+# Definimos a variável de ambiente para o build e para o runtime
+ENV NODE_OPTIONS=--openssl-legacy-provider
+# Limpa o cache do npm e instala com --legacy-peer-deps
+# O "npm cache clean --force" pode ajudar com problemas de cache.
+RUN npm cache clean --force && npm install --legacy-peer-deps
+
 COPY . .
 
-# Comando para construir a aplicação React (gerar os arquivos estáticos)
-RUN npm run build
+EXPOSE 5173
 
-# Estágio 2: Servir (Produção)
-FROM nginx:alpine
-
-# Copia os arquivos de build gerados pelo estágio 'build' para a pasta de serviço do Nginx
-COPY --from=build /app/dist /usr/share/nginx/html
-
-# Expõe a porta padrão do Nginx (80)
-EXPOSE 80
+# Para garantir que o Vite seja acessível de fora do contêiner
+CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
