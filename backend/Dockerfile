@@ -1,20 +1,27 @@
-# backend/Dockerfile
+# Use a imagem base Node.js
+FROM node:18
 
-# Estágio 1: Construção
-FROM node:18-alpine AS build
+# Defina o diretório de trabalho no contêiner
 WORKDIR /app
+
+# Copie apenas os arquivos de dependência primeiro
 COPY package*.json ./
-RUN npm install --omit=dev
+
+# Instale as dependências como usuário 'node' para garantir permissões corretas
+# O bcrypt frequentemente requer ferramentas de build que são instaladas automaticamente
+# pela imagem node:18, mas vamos garantir que ele seja reconstruído.
+RUN npm cache clean --force && \
+    npm install --legacy-peer-deps && \
+    npm rebuild bcrypt --build-from-source
+
+# Mude para o usuário 'node' para as próximas operações e para rodar a aplicação
+USER node
+
+# Copie o restante do código da aplicação
 COPY . .
 
-# Estágio 2: Produção
-FROM node:18-alpine
-WORKDIR /app
-COPY --from=build /app/node_modules ./node_modules
-COPY --from=build /app .
+# Exponha a porta que sua aplicação Node.js vai usar
+EXPOSE 5000
 
-# Expõe a porta que sua aplicação Node.js vai rodar
-EXPOSE 5000 
-
-# Comando para iniciar a aplicação
-CMD ["npm", "start"]
+# Comando para iniciar a aplicação (executado como usuário 'node')
+CMD [ "npm", "start" ]
