@@ -96,8 +96,8 @@ docker compose up --build
 
 3. Acesse:
 
-- Frontend: [http://localhost:5173]
-- Backend (API): [http://localhost:5000/api/playlists]
+- Frontend: (http://localhost:5173)
+- Backend (API): (http://localhost:5000/api/playlists)
 - PostgreSQL: porta `5432`, usuário `postgres`, senha `1713`
 
 ---
