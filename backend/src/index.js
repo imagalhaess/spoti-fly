@@ -1,22 +1,27 @@
-require("dotenv").config();
+// src/index.js
+const db = require("./config/db"); // Importa o pool do banco de dados
+const app = require("./app"); // Importa o aplicativo Express
+const PORT = process.env.PORT || 5000; // Define a porta do servidor
 
-const db = require("./config/db"); // Importa a configuração do banco de dados
-const express = require("express"); // Importa o framework Express
-const cors = require("cors");
-const app = express(); // Cria uma instância do aplicativo Express
-const PORT = process.env.PORT || 5000; // Define a porta do servidor, usando a variável de ambiente PORT ou 5000 como padrão
-const playlistRoutes = require("./routes/playlistRoutes"); // Importa as rotas de playlists
-const usuarioRoutes = require("./routes/usuarioRoutes"); // Importa as rotas de usuários
+// Função assíncrona para iniciar o servidor
+async function startServer() {
+    try {
+        // Testa a conexão com o banco de dados usando o pool
+        // Vamos tentar obter um cliente do pool para verificar se a conexão funciona
+        const client = await db.connect(); // Obtém um cliente do pool
+        client.release(); // Libera o cliente de volta para o pool
 
-app.use(cors()); // HABILITA CORS
-app.use(express.json());
-app.use("/api", playlistRoutes); // Configura o middleware para analisar o corpo das requisições como JSON e usa as rotas de playlists
-app.use("/api", usuarioRoutes); // Configura o middleware para usar as rotas de usuários
+        console.log('Conexão com o banco de dados estabelecida com sucesso!');
 
-app.get("/", (req, res) => {
-  res.send("Spotifly backend rodando...");
-});
+        // Inicia o servidor Express
+        app.listen(PORT, () => {
+            console.log(`Servidor rodando na porta ${PORT}`);
+        });
+    } catch (error) {
+        console.error('Falha ao iniciar o servidor: Erro de conexão com o banco de dados', error);
 
-app.listen(PORT, () => {
-  console.log(`Servidor rodando na porta ${PORT}`);
-});
+    }
+}
+
+// Chame a função para iniciar o servidor
+startServer();

@@ -1,4 +1,3 @@
-
 # Estrutura do Projeto – Spoti-Fly
 
 Este documento descreve a estrutura de pastas, organização de arquivos e camadas utilizadas no projeto Spoti-Fly.
@@ -14,61 +13,81 @@ Este documento descreve a estrutura de pastas, organização de arquivos e camad
 ```
 spoti-fly/
 ├── backend/
-│   ├── src/
-│   │   ├── config/
-│   │   │   └── db.js
-│   │   ├── controllers/
-│   │   │   ├── playlistController.js
-│   │   │   └── usuarioController.js
-│   │   ├── middleware/
-│   │   │   └── authMiddleware.js
-│   │   ├── routes/
-│   │   │   ├── playlist.routes.js
-│   │   │   └── usuario.routes.js
-│   │   └── index.js
-│   ├── .env
-│   ├── .gitignore
-│   └── package.json
-│   └── Dockerfile 
+│   ├── src/
+│   │   ├── __tests__/      # Para testes de integração
+│   │   │   │  ├── integration/
+│   │   │   │  ├── auth.test.js
+│   │   │   └── playlist.test.js
+│   │   │   │   └──
+│   │   │   └── unit/       # Para testes unitários
+│   │   │   │   └── emailValido.test.js
+│   │   ├── config/
+│   │   │   └── db.js          # Configuração do banco de dados
+│   │   ├── controllers/
+│   │   │   ├── playlistController.js
+│   │   │   └── usuarioController.js
+│   │   ├── middleware/
+│   │   │   └── authMiddleware.js # Para autenticação JWT
+│   │   ├── routes/
+│   │   │   ├── playlist.routes.js
+│   │   │   └── usuario.routes.js
+│   │   ├── app.js             # Módulo Express principal (exporta o 'app')
+│   │   └── index.js           # Ponto de entrada do servidor (inicia o 'app' e DB)
+│   ├── .env                   # Variáveis de ambiente para desenvolvimento
+│   ├── .env.test              # Variáveis de ambiente para testes
+│   ├── .gitignore
+│   ├── Dockerfile             # Dockerfile para o backend
+│   ├── jest.config.js         # Configuração do Jest
+│   ├── package.json           # Dependências e scripts do backend
+│   └── package-lock.json      # Bloqueio de dependências do backend
 │
 ├── frontend/
-│   ├── src/
-│   │   ├── components/
-│   │   ├── pages/
-│   │   │   ├── Login.jsx
-│   │   │   ├── Register.jsx
-│   │   │   ├── Home.jsx
-│   │   │   └── CriarPlaylist.jsx
-│   │   ├── services/
-│   │   │   └── api.js
-│   │   ├── App.jsx
-│   │   └── main.jsx
-│   ├── public/
-│   └── package.json
-│   └── Dockerfile 
+│   ├── public/
+│   ├── src/
+│   │   ├── components/        # Componentes reutilizáveis
+│   │   ├── pages/
+│   │   │   ├── Login.jsx
+│   │   │   ├── Register.jsx
+│   │   │   ├── Home.jsx
+│   │   │   └── CriarPlaylist.jsx
+│   │   ├── services/
+│   │   │   └── api.js         # Configuração do Axios/Fetch para APIs
+│   │   ├── App.jsx            # Componente principal da aplicação
+│   │   └── main.jsx           # Ponto de entrada do React/Vite
+│   ├── .env                   # Variáveis de ambiente para desenvolvimento (frontend)
+│   ├── .env.local             # Variáveis de ambiente locais (frontend)
+│   ├── .gitignore
+│   ├── Dockerfile             # Dockerfile para o frontend
+│   ├── index.html             # HTML principal do frontend
+│   ├── nginx.conf             # Configuração Nginx para servir o frontend
+│   ├── package.json           # Dependências e scripts do frontend
+│   └── package-lock.json      # Bloqueio de dependências do frontend
 │
-├── docker-compose.yml
-├── docs/
-│   ├── estrutura.md
-│   ├── mapeamento-de-rotas.md
-│   ├── cronograma.md
-│   └── readme.md
+├── .gitignore                 # .gitignore global para o projeto
+├── docker-compose.yml         # Orquestração de serviços Docker
+├── docs/                      # Documentação do projeto
+│   ├── estrutura.md
+│   ├── mapeamento-de-rotas.md
+│   ├── cronograma.md
+│   └── readme.md
+└── README.md
 ```
+
 ---
 
 ## Backend
 
 - **`src/config/db.js`**  
-  Configuração da conexão com o banco de dados PostgreSQL.
+    Configuração da conexão com o banco de dados PostgreSQL.
 
 - **`src/controllers/`**  
-  Contém a lógica das rotas (`GET`, `POST`, etc). Ex: `createPlaylist`, `adicionarMusica`.
+    Contém a lógica das rotas (`GET`, `POST`, etc). Ex: `createPlaylist`, `adicionarMusica`.
 
 - **`src/routes/`**  
-  Define os caminhos das rotas e conecta com os controllers.
+    Define os caminhos das rotas e conecta com os controllers.
 
 - **`index.js`**  
-  Ponto de entrada do backend. Configura express, rotas e porta do servidor.
+    Ponto de entrada do backend. Configura express, rotas e porta do servidor.
 
 - **`Dockerfile`**
   Arquivo de receita para construir a imagem Docker do backend, empacotando o ambiente Node.js e as dependências.
@@ -78,16 +97,16 @@ spoti-fly/
 ## Frontend
 
 - **`components/`**  
-  Componentes reutilizáveis (ex: Navbar, CardPlaylist, Header...).
+    Componentes reutilizáveis
 
 - **`pages/`**  
-  Páginas principais (Home, PlaylistDetalhes, Login...).
+    Páginas principais
 
 - **`services/`**  
-  Comunicação com a API (`axios`, chamadas externas).
+    Comunicação com a API (`axios`, chamadas externas).
 
 - **`App.jsx` + `main.jsx`**  
-  Estrutura principal da aplicação React (configuração de rotas, layout).
+    Estrutura principal da aplicação React (configuração de rotas, layout).
 
 - **`Dockerfile`**
   Arquivo de receita para construir a imagem Docker do frontend, criando os arquivos estáticos e utilizando Nginx para servi-los.
@@ -104,8 +123,9 @@ spoti-fly/
 ## Documentação
 
 - **`/docs/`**  
-  Contém arquivos auxiliares com cronograma, mapeamento de rotas e estrutura técnica.
+    Contém arquivos auxiliares com cronograma, mapeamento de rotas e estrutura técnica.
 
 - **`README.md`**  
-  Documentação principal do projeto (descrição, instalação, uso, rotas).
+    Documentação principal do projeto (descrição, instalação, uso, rotas).
+
 ---
