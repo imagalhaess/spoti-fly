@@ -19,8 +19,10 @@ CREATE TABLE IF NOT EXISTS musicas (
     artista VARCHAR(255) NOT NULL,
     capa_url VARCHAR(255),
     deezer_id VARCHAR(255) UNIQUE NOT NULL,
+    preview_url TEXT, 
     criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
 
 CREATE TABLE IF NOT EXISTS playlist_musicas (
     playlist_id INTEGER NOT NULL REFERENCES playlists(id) ON DELETE CASCADE,

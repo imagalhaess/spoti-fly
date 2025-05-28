@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import api from "../services/api";
 import { useNavigate, Link } from "react-router-dom";
 
+
 export default function Home() {
   const [playlists, setPlaylists] = useState([]);
   const navigate = useNavigate();
@@ -60,7 +61,6 @@ export default function Home() {
       </button>
       <h1>Spotifly</h1>
       <h2>Minhas Playlists</h2>
-      {/* Botão para criar nova playlist */}
       <Link
         to="/criar-playlist"
         style={{
@@ -93,7 +93,19 @@ export default function Home() {
                 alignItems: "center",
               }}
             >
-              <span>{playlist.nome}</span>
+              {/* Link para ver detalhes da playlist */}
+              <Link
+                to={`/playlists/${playlist.id}`}
+                style={{
+                  color: "#fff",
+                  textDecoration: "none",
+                  fontWeight: "bold",
+                }}
+              >
+                {playlist.nome}
+              </Link>
+
+              {/* Link para adicionar músicas */}
               <Link
                 to={`/playlists/${playlist.id}/adicionar-musica`}
                 style={{

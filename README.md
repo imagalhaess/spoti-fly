@@ -15,10 +15,11 @@ O projeto inclui frontend com React, backend com Node.js + Express, banco de dad
 - Criação de playlists
 - Busca de músicas usando API do Deezer
 - Adição de músicas à playlist
-- Listagem de músicas por playlist (Em implementação no Frontend)
+- Listagem de músicas por playlist
 - Logout e proteção de rotas
 - Integração completa entre backend, frontend e banco via Docker
 - Testes automatizados (Jest) com cobertura ≥ 25%
+- Dockerização completa com três containers: frontend, backend e banco de dados
 
 ---
 
@@ -73,6 +74,12 @@ Crie um arquivo `.env` na pasta `/backend` com o seguinte conteúdo:
 DATABASE_URL=postgresql://postgres:1713@localhost:5432/spotifly
 JWT_SECRET=sua_chave_secreta_segura
 PORT=5000
+```
+
+E na pasta `/frontend`:
+
+```env
+VITE_API_URL=http://localhost:5000/api
 ```
 
 > **Obs:** Se estiver usando Docker, não é necessário criar manualmente o banco nem alterar a porta.

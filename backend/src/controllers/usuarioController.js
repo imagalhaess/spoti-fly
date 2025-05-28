@@ -13,24 +13,36 @@ async function registerUsuario(req, res) {
   try {
     // Verifica se o email já está cadastrado
     const checkUser = await db.query(
-            "SELECT id FROM usuarios WHERE email = $1",
-            [email]
-        );
-        if (checkUser.rows.length > 0) {
-            return res.status(409).json({ error: "E-mail já registrado." });
-        }
+      "SELECT id FROM usuarios WHERE email = $1",
+      [email]
+    );
+    if (checkUser.rows.length > 0) {
+      return res.status(409).json({ error: "E-mail já registrado." });
+    }
     // Cria o hash da senha usando bcrypt
     const senhaHash = await bcrypt.hash(senha, 10);
 
     // Insere o novo usuário no banco de dados
-    const result = await db.query("INSERT INTO usuarios (nome, email, senha_hash) VALUES ($1, $2, $3) RETURNING id, nome, email, criado_em", [nome, email, senhaHash]); // Insere o usuário no banco de dados
+    const result = await db.query(
+      "INSERT INTO usuarios (nome, email, senha_hash) VALUES ($1, $2, $3) RETURNING id, nome, email, criado_em",
+      [nome, email, senhaHash]
+    ); // Insere o usuário no banco de dados
 
-    const token = jwt.sign({ id: result.rows[0].id }, process.env.JWT_SECRET, {expiresIn: "2h",
+    const token = jwt.sign({ id: result.rows[0].id }, process.env.JWT_SECRET, {
+      expiresIn: "2h",
     }); // Gera um token JWT para o usuário
-    return res.status(201).json({error: "Usuário registrado com sucesso", usuario: result.rows[0], token });
+    return res
+      .status(201)
+      .json({
+        error: "Usuário registrado com sucesso",
+        usuario: result.rows[0],
+        token,
+      });
   } catch (error) {
     console.error("Erro ao registrar usuário:", error);
-    res.status(500).json({ error: "Erro interno do servidor ao registrar usuário" });
+    res
+      .status(500)
+      .json({ error: "Erro interno do servidor ao registrar usuário" });
   }
 }
 // Função para fazer login de um usuário
@@ -41,7 +53,9 @@ async function loginUsuario(req, res) {
     return res.status(400).json({ error: "Email e senha são obrigatórios." });
   }
   try {
-    const result = await db.query("SELECT * FROM usuarios WHERE email = $1", [email]);
+    const result = await db.query("SELECT * FROM usuarios WHERE email = $1", [
+      email,
+    ]);
     if (result.rows.length === 0) {
       return res.status(401).json({ error: "Usuário não encontrado." });
     }
@@ -51,15 +65,16 @@ async function loginUsuario(req, res) {
       return res.status(401).json({ error: "Senha inválida." });
     }
     const token = jwt.sign({ id: usuario.id }, process.env.JWT_SECRET, {
-      expiresIn: '2h'
+      expiresIn: "2h",
     });
-    res.status(200).json({error: "Login bem-sucedido",
+    res.status(200).json({
+      error: "Login bem-sucedido",
       usuario: {
         id: usuario.id,
         nome: usuario.nome,
-        email: usuario.email
+        email: usuario.email,
       },
-      token
+      token,
     });
   } catch (error) {
     console.error("Erro ao fazer login:", error);

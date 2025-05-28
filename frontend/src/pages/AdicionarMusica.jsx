@@ -10,7 +10,7 @@ export default function AdicionarMusica() {
   const [mensagemErro, setMensagemErro] = useState('');
   const [mensagemSucesso, setMensagemSucesso] = useState('');
 
-
+// Função para buscar músicas na API do Deezer
   async function buscarMusicas(e) { 
     e.preventDefault();
     setMensagemErro('');
@@ -46,6 +46,7 @@ export default function AdicionarMusica() {
     }
   }
 
+  // Função para adicionar música à playlist
   async function adicionarMusica(musica) {
     setMensagemErro('');
     setMensagemSucesso('');

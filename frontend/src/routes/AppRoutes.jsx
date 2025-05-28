@@ -4,7 +4,9 @@ import Register from "../pages/Register";
 import Home from "../pages/Home";
 import CriarPlaylist from "../pages/CriarPlaylist";
 import AdicionarMusica from "../pages/AdicionarMusica";
+import PlaylistDetalhes from "../pages/PlaylistDetalhes";
 
+// Função principal que define as rotas da aplicação
 export default function AppRoutes() {
   return (
     <BrowserRouter>
@@ -17,6 +19,7 @@ export default function AppRoutes() {
           path="/playlists/:id/adicionar-musica"
           element={<AdicionarMusica />}
         />
+        <Route path="/playlists/:id" element={<PlaylistDetalhes />} />
       </Routes>
     </BrowserRouter>
   );

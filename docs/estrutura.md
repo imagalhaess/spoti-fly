@@ -49,7 +49,8 @@ spoti-fly/
 │   │   │   ├── Login.jsx
 │   │   │   ├── Register.jsx
 │   │   │   ├── Home.jsx
-│   │   │   └── CriarPlaylist.jsx
+│   │   │   ├── CriarPlaylist.jsx
+│   │   │   └── PlaylistDetalhes.jsx # Página que exibe as músicas
 │   │   ├── services/
 │   │   │   └── api.js         # Configuração do Axios/Fetch para APIs
 │   │   ├── App.jsx            # Componente principal da aplicação
