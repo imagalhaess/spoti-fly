@@ -114,7 +114,7 @@ cd spoti-fly
 cd backend
 cat > .env <<EOF
 DATABASE_URL=postgresql://postgres:1713@localhost:5432/spotifly
-JWT_SECRET=minhaChaveSecreta
+JWT_SECRET=KLt84mc9NdoDgsWjao7zE4Wpz4usGDwq
 PORT=5000
 EOF
 npm install
@@ -146,7 +146,7 @@ Se estiver usando Docker, o `.env` é carregado automaticamente pelo Compose. Pa
 
   ```env
   DATABASE_URL=postgresql://postgres:1713@localhost:5432/spotifly
-  JWT_SECRET=minhaChaveSecreta
+  JWT_SECRET=KLt84mc9NdoDgsWjao7zE4Wpz4usGDwq
   PORT=5000
   ```
 
