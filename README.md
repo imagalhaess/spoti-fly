@@ -75,7 +75,7 @@ cd spoti-fly
 
    ```env
    POSTGRES_PASSWORD=1713
-   JWT_SECRET=minhaChaveSecreta
+   JWT_SECRET=KLt84mc9NdoDgsWjao7zE4Wpz4usGDwq
    ```
 2. Suba os containers:
 
