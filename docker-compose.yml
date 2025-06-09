@@ -1,52 +1,65 @@
 version: "3.8"
 
 services:
+  # Serviço de banco de dados PostgreSQL
   db:
     image: postgres:14
     container_name: spoti-fly-db
     restart: always
+    # Variáveis internas do container para configurar o Postgres
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 1713
       POSTGRES_DB: spotifly
+    # Onde o Postgres vai gravar os dados no host e scripts de inicialização
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - ./db/init:/docker-entrypoint-initdb.d # scripts SQL de inicialização, se necessário
+      - ./db/init:/docker-entrypoint-initdb.d
+    # Mapeia a porta 5432 do container para a 5432 local
     ports:
       - "5432:5432"
+    # Verifica se o Postgres já está disponível antes de iniciar dependentes
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres -d spotifly"]
-      interval: 5s
+      interval: 10s
       timeout: 5s
       retries: 5
 
+  # Serviço da API (backend)
   backend:
-    build: ./backend
+    build:
+      context: ./backend
     container_name: spoti-fly-backend
+    # Carrega as variáveis definidas em backend/.env
+    env_file:
+      - ./backend/.env
+    # Expõe a porta 5000 para chamadas locais
     ports:
       - "5000:5000"
-    # volume comentado para evitar sobrescrever node_modules dentro do container
-    # - ./backend:/app
-    environment:
-      DATABASE_URL: postgresql://postgres:1713@db:5432/spotifly
-      JWT_SECRET: KLt84mc9NdoDgsWjao7zE4Wpz4usGDwq
-      PORT: 5000
+    # Aguarda o banco ficar “healthy” antes de subir
     depends_on:
       db:
         condition: service_healthy
 
+  # Serviço do frontend (React/Vite)
   frontend:
-    build: ./frontend
+    build:
+      context: ./frontend
     container_name: spoti-fly-frontend
-    ports:
-      - "5173:5173"
+    # Monta o código local para hot-reload, mas preserva node_modules do container
     volumes:
       - ./frontend:/app
-      - /app/node_modules # impede que sobrescreva o node_modules do container
+      - /app/node_modules
+    # Porta padrão do Vite
+    ports:
+      - "5173:5173"
+    # Define a URL da API que o frontend vai chamar (dentro da rede Docker)
     environment:
       VITE_API_URL: http://localhost:5000/api
+    # Garante que o backend já tenha começado antes
     depends_on:
       - backend
 
+# Volume persistente para o banco
 volumes:
   postgres_data:

@@ -1,51 +1,56 @@
 # Sobre o Projeto
 
-Este projeto foi desenvolvido como desafio técnico para vaga de Desenvolvedora Pleno Fullstack. O objetivo foi aplicar boas práticas de Clean Code, autenticação segura, integração com serviços externos, testes e deploy local com Docker.
+Este projeto foi desenvolvido como desafio técnico para vaga de **Desenvolvedora Pleno Full-Stack**. O objetivo foi aplicar boas práticas de Clean Code, autenticação segura, integração com serviços externos, testes automatizados e deploy local via Docker.
 
-# Spoti-Fly
+# Spoti‑Fly
 
-Spoti-Fly é uma plataforma web de gerenciamento de playlists e músicas, inspirada em sistemas de streaming.  
-O projeto inclui frontend com React, backend com Node.js + Express, banco de dados PostgreSQL e integração com a API pública do Deezer.
+Spoti‑Fly é uma plataforma web de gerenciamento de playlists e músicas, inspirada em sistemas de streaming.
+O projeto inclui:
+
+* **Frontend:** React (Vite)
+* **Backend:** Node.js + Express
+* **Banco de dados:** PostgreSQL
+* **Integração externa:** API pública do Deezer
 
 ---
 
 ## Funcionalidades
 
-- Cadastro e login de usuários (com JWT)
-- Criação de playlists
-- Busca de músicas usando API do Deezer
-- Adição de músicas à playlist
-- Listagem de músicas por playlist
-- Logout e proteção de rotas
-- Integração completa entre backend, frontend e banco via Docker
-- Testes automatizados (Jest) com cobertura ≥ 25%
-- Dockerização completa com três containers: frontend, backend e banco de dados
+* Cadastro e login de usuários (JWT)
+* Criação, edição e exclusão de playlists
+* Busca de músicas usando a API do Deezer
+* Adição e remoção de músicas em playlists
+* Listagem de músicas por playlist
+* Logout e proteção de rotas privadas
+* Execução integrada de frontend, backend e banco via Docker
+* Testes automatizados (Jest) com cobertura ≥ 25%
+* Dockerização completa com três containers: frontend, backend e DB
 
 ---
 
 ## Tecnologias Utilizadas
 
-### Backend
+**Backend**
 
-- Node.js + Express
-- PostgreSQL + `pg`
-- JWT para autenticação
-- Bcrypt para senhas
-- Axios para integração com Deezer
+* Node.js + Express
+* PostgreSQL + `pg`
+* JWT para autenticação
+* Bcrypt para hash de senhas
+* Axios para requisições à API do Deezer
 
-### Frontend
+**Frontend**
 
-- React (com Vite)
-- React Router DOM
-- Axios
+* React (Vite)
+* React Router DOM
+* Axios
 
-### Infra & DevTools
+**Infraestrutura & DevTools**
 
-- Docker & Docker Compose
-- Jest (testes unitários e de integração)
-- Insomnia (testes de API)
-- pgAdmin
-- Git + GitHub (Gitflow)
+* Docker & Docker Compose
+* Jest (testes unitários e de integração)
+* Insomnia / Postman (testes de API)
+* pgAdmin (administração do banco)
+* Git + GitHub (Gitflow)
 
 ---
 
@@ -53,103 +58,118 @@ O projeto inclui frontend com React, backend com Node.js + Express, banco de dad
 
 ### Pré-requisitos
 
-### Rodando com Docker (recomendado)
+* Git
+* **Modo Docker (recomendado):** Docker Desktop (inclui Docker Compose)
+* **Modo manual:** Node.js ≥ 18, npm, PostgreSQL ≥ 14
 
-- Docker: https://www.docker.com/products/docker-desktop
-- Docker Compose (já incluso no Docker Desktop)
-
-### Rodando sem Docker (modo manual)
-
-- Node.js (v18+): https://nodejs.org
-- PostgreSQL 14+: https://www.postgresql.org/download/
-- npm (já incluso com Node.js)
-
----
-
-## VARIÁVEIS DE AMBIENTE `.env`
-
-Crie um arquivo `.env` na pasta `/backend` com o seguinte conteúdo:
-
-```env
-DATABASE_URL=postgresql://postgres:1713@localhost:5432/spotifly
-JWT_SECRET=sua_chave_secreta_segura
-PORT=5000
-```
-
-E na pasta `/frontend`:
-
-```env
-VITE_API_URL=http://localhost:5000/api
-```
-
-> **Obs:** Se estiver usando Docker, não é necessário criar manualmente o banco nem alterar a porta.
-
----
-
-## EXECUTANDO COM DOCKER
-
-1. Clone o repositório:
+### 1. Clonar o repositório
 
 ```bash
 git clone https://github.com/imagalhaess/spoti-fly.git
 cd spoti-fly
 ```
 
-2. Suba os serviços com Docker Compose:
+### 2. Executando com Docker (recomendado)
 
-```bash
-docker compose up --build
-```
+1. *(opcional)* Crie um arquivo `.env` na raiz para sobrescrever padrões:
 
-3. Acesse:
+   ```env
+   POSTGRES_PASSWORD=1713
+   JWT_SECRET=minhaChaveSecreta
+   ```
+2. Suba os containers:
 
-- Frontend: (http://localhost:5173)
-- Backend (API): (http://localhost:5000/api/playlists)
-- PostgreSQL: porta `5432`, usuário `postgres`, senha `1713`
+   ```bash
+   docker compose up --build -d
+   ```
+3. Acesse no navegador:
 
----
+   * Frontend: `http://localhost:5173`
+   * API:      `http://localhost:5000/api`
+   * Banco:   `localhost:5432` (usuário: `postgres`, senha: `1713`)
 
-## EXECUTANDO SEM DOCKER (modo manual)
+> Para parar e remover containers e volumes:
+>
+> ```bash
+> docker compose down -v
+> ```
 
-### Banco de Dados
+### 3. Executando sem Docker (modo manual)
 
-1. Crie um banco PostgreSQL chamado `spotifly`
-2. Crie manualmente as tabelas (código em `db/init/create_tables.sql`)
+> **Crie e preencha cada `.env` conforme abaixo.**
 
----
+#### 3.1 Banco de Dados
 
-### Backend
+1. Instale e inicie o PostgreSQL localmente.
+2. Crie um banco chamado `spotifly`.
+3. Execute scripts de criação de tabelas:
+
+   ```bash
+   psql -U postgres -d spotifly -f db/init/create_tables.sql
+   ```
+
+#### 3.2 Backend
 
 ```bash
 cd backend
+cat > .env <<EOF
+DATABASE_URL=postgresql://postgres:1713@localhost:5432/spotifly
+JWT_SECRET=minhaChaveSecreta
+PORT=5000
+EOF
 npm install
 npm run dev
 ```
 
----
+* A API ficará disponível em `http://localhost:5000/api`.
 
-### Frontend
+#### 3.3 Frontend
 
 ```bash
 cd frontend
+cat > .env <<EOF
+VITE_API_URL=http://localhost:5000/api
+EOF
 npm install
 npm run dev
 ```
 
+* O frontend estará em `http://localhost:5173`.
+
 ---
 
-## RODANDO OS TESTES
+## Variáveis de Ambiente
+
+Se estiver usando Docker, o `.env` é carregado automaticamente pelo Compose. Para modo manual, crie:
+
+* **backend/.env**
+
+  ```env
+  DATABASE_URL=postgresql://postgres:1713@localhost:5432/spotifly
+  JWT_SECRET=minhaChaveSecreta
+  PORT=5000
+  ```
+
+* **frontend/.env**
+
+  ```env
+  VITE_API_URL=http://localhost:5000/api
+  ```
+
+---
+
+## Rodando os Testes
 
 ```bash
 cd backend
 npm test
 ```
 
-Gera relatório de cobertura em `/coverage`.
+* Relatório de cobertura gerado em `backend/coverage/`.
 
 ---
 
-## ENCERRAR SERVIÇOS DO DOCKER
+## Encerrar Serviços do Docker
 
 ```bash
 docker compose down -v --remove-orphans
@@ -159,5 +179,5 @@ docker compose down -v --remove-orphans
 
 ## Desenvolvido por
 
-Isabela Magalhães  
+Isabela Magalhães
 2025
