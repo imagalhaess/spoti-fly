@@ -1,89 +1,83 @@
-/* Estilos do componente Card */
+/* Card profissional com nova paleta */
 
 .card {
-  background: linear-gradient(145deg, #282828 0%, #1a1a1a 100%);
-  border-radius: 12px;
+  background: linear-gradient(145deg, var(--bg-card) 0%, var(--bg-dark-secondary) 100%);
+  border-radius: var(--border-radius-lg);
   overflow: hidden;
-  transition: all 0.3s ease;
+  transition: all var(--transition-normal);
   cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  box-shadow: var(--shadow-md);
   height: 100%;
   display: flex;
   flex-direction: column;
+  border: 1px solid rgba(78, 205, 196, 0.1);
 }
 
-/* Efeito hover no card */
 .card:hover {
-  transform: translateY(-8px);
-  /* Levanta o card */
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5);
-  background: linear-gradient(145deg, #2a2a2a 0%, #1c1c1c 100%);
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-xl);
+  background: linear-gradient(145deg, var(--bg-card-hover) 0%, var(--bg-card) 100%);
+  border-color: rgba(78, 205, 196, 0.3);
 }
 
-/* Imagem do card */
 .card-image {
   width: 100%;
   height: 200px;
   object-fit: cover;
-  /* Mantém proporção da imagem */
 }
 
-/* Placeholder quando não há imagem */
 .card-placeholder {
   width: 100%;
   height: 200px;
-  background: linear-gradient(135deg, #1db954 0%, #1ed760 100%);
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+  overflow: hidden;
 }
 
-.card-placeholder-icon {
-  font-size: 4rem;
-  animation: pulse 2s ease-in-out infinite;
-  /* Animação de pulso */
+.card-placeholder::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  animation: shimmer 2s infinite;
 }
 
-/* Animação de pulso para o ícone */
-@keyframes pulse {
-  0%,
+@keyframes shimmer {
   100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.8;
-    transform: scale(1.05);
+    left: 100%;
   }
 }
 
-/* Conteúdo do card (texto) */
 .card-content {
-  padding: 1.2rem;
+  padding: 1.25rem;
   flex: 1;
-  /* Ocupa o espaço restante */
   display: flex;
   flex-direction: column;
 }
 
 .card-title {
-  color: white;
-  font-size: 1.3rem;
-  font-weight: 700;
+  color: var(--text-primary);
+  font-size: 1.25rem;
+  font-weight: 600;
   margin: 0 0 0.5rem 0;
-  /* Limita o título em 2 linhas e adiciona "..." se for muito longo */
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  letter-spacing: -0.01em;
 }
 
 .card-description {
-  color: #b3b3b3;
+  color: var(--text-secondary);
   font-size: 0.9rem;
   margin: 0;
   line-height: 1.5;
-  /* Limita a descrição em 3 linhas */
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
@@ -97,15 +91,11 @@
     height: 180px;
   }
 
-  .card-placeholder-icon {
-    font-size: 3rem;
-  }
-
   .card-title {
-    font-size: 1.1rem;
+    font-size: 1.125rem;
   }
 
   .card-description {
-    font-size: 0.85rem;
+    font-size: 0.875rem;
   }
 }
