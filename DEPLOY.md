@@ -1,127 +1,170 @@
 # 🚀 Guia de Deploy - Spotifly
 
-## Deploy Completo no Vercel
+## Estratégia: Frontend + Backend Separados
 
-### ⚠️ Importante: Banco de Dados
-
-O Vercel não oferece banco de dados PostgreSQL gratuito. Você tem 2 opções:
-
-#### **Opção A: Usar Vercel Postgres (Pago após trial)**
-- 60 dias grátis
-- Depois: $0.29/GB
-
-#### **Opção B: Banco Externo Gratuito (Recomendado)**
-Use um destes serviços gratuitos para PostgreSQL:
-- **Neon.tech** ⭐ (Recomendado - 0.5GB grátis)
-- **Supabase** (500MB grátis)
-- **ElephantSQL** (20MB grátis)
+**Frontend** → Vercel (Grátis)  
+**Backend** → Render.com (Grátis)  
+**Banco de Dados** → Neon.tech (Grátis)
 
 ---
 
-## 📝 Passo a Passo Completo
+## 📦 Passo 1: Deploy do Frontend (Vercel)
 
-### 1. Configurar Banco de Dados (Neon.tech)
+### 1.1 No Vercel Dashboard:
+
+1. Acesse: https://vercel.com
+2. Faça login com GitHub
+3. **"Add New Project"**
+4. Selecione: `spoti-fly`
+
+### 1.2 Configurações Importantes:
+
+Nas configurações do projeto, defina:
+
+**Framework Preset:** `Vite`  
+**Root Directory:** `frontend`  
+**Build Command:** `npm run build`  
+**Output Directory:** `dist`
+
+### 1.3 Variáveis de Ambiente:
+
+Por enquanto, deixe vazio. Vamos configurar depois que o backend estiver no ar.
+
+### 1.4 Deploy!
+
+Clique em **"Deploy"** e aguarde.
+
+✅ Seu frontend estará em: `https://spoti-fly-xxx.vercel.app`
+
+---
+
+## 🔧 Passo 2: Deploy do Backend (Render.com)
+
+### 2.1 Configurar Banco de Dados (Neon.tech)
 
 1. Acesse: https://neon.tech
-2. Crie uma conta (grátis)
-3. Clique em "Create Project"
-4. Copie a **Connection String** (algo como):
+2. Faça login com GitHub
+3. **"Create Project"**
+4. Copie a **Connection String**:
    ```
-   postgresql://user:password@ep-cool-name.region.aws.neon.tech/neondb
-   ```
-
-### 2. Deploy no Vercel
-
-1. **Acesse:** https://vercel.com
-2. **Login com GitHub**
-3. **"Add New Project"**
-4. **Selecione:** `spoti-fly`
-5. **Configure as Variáveis de Ambiente:**
-
-   Clique em "Environment Variables" e adicione:
-
-   ```
-   DATABASE_URL = sua_connection_string_do_neon
-   JWT_SECRET = KLt84mc9NdoDgsWjao7zE4Wpz4usGDwq
-   NODE_ENV = production
-   PORT = 5000
+   postgresql://user:pass@host.neon.tech/neondb
    ```
 
-6. **Deploy!**
+### 2.2 Deploy no Render.com
 
-### 3. Configurar URLs
+1. Acesse: https://render.com
+2. Faça login com GitHub
+3. **"New +"** → **"Web Service"**
+4. Conecte seu repositório: `spoti-fly`
 
-Após o deploy, o Vercel vai te dar um endereço:
-```
-https://spoti-fly-seuprojeto.vercel.app
-```
+### 2.3 Configurações do Backend:
 
-**Atualize o frontend para usar esse endereço:**
-- No Vercel, vá em Settings → Environment Variables
-- Adicione:
-  ```
-  VITE_API_URL = https://spoti-fly-seuprojeto.vercel.app/api
-  ```
-- Faça um novo deploy
+**Name:** `spoti-fly-backend`  
+**Root Directory:** `backend`  
+**Environment:** `Node`  
+**Build Command:** `npm install`  
+**Start Command:** `npm start`
+
+### 2.4 Variáveis de Ambiente no Render:
+
+Adicione estas variáveis:
+
+| Nome | Valor |
+|------|-------|
+| `DATABASE_URL` | Sua connection string do Neon |
+| `JWT_SECRET` | `KLt84mc9NdoDgsWjao7zE4Wpz4usGDwq` |
+| `NODE_ENV` | `production` |
+| `PORT` | `5000` |
+
+### 2.5 Deploy!
+
+Clique em **"Create Web Service"**
+
+✅ Seu backend estará em: `https://spoti-fly-backend-xxx.onrender.com`
 
 ---
 
-## 🎯 Comandos para Commit e Deploy
+## 🔗 Passo 3: Conectar Frontend ao Backend
 
-```bash
-# 1. Adicionar arquivos
-git add .
+### 3.1 No Vercel (Frontend):
 
-# 2. Commit
-git commit -m "🚀 Configurar deploy no Vercel"
+1. Vá em **Settings** → **Environment Variables**
+2. Adicione:
 
-# 3. Push
-git push origin main
-```
+   **Name:** `VITE_API_URL`  
+   **Value:** `https://spoti-fly-backend-xxx.onrender.com/api`
 
-O Vercel faz deploy automático após cada push! ✨
+3. Clique em **Save**
+
+### 3.2 Fazer Redeploy:
+
+1. Vá em **Deployments**
+2. Clique nos 3 pontinhos do último deploy
+3. **"Redeploy"**
 
 ---
 
-## ✅ Checklist Final
+## ✅ Verificar se está Funcionando
 
-- [ ] Banco de dados criado no Neon.tech
-- [ ] Variáveis de ambiente configuradas no Vercel
-- [ ] Primeiro deploy feito
-- [ ] Frontend acessa o backend corretamente
-- [ ] Teste: criar conta e fazer login
+1. Acesse seu frontend: `https://spoti-fly-xxx.vercel.app`
+2. Tente fazer login ou criar uma conta
+3. Se funcionar, está tudo certo! 🎉
 
 ---
 
 ## 🐛 Troubleshooting
 
-### Erro: "Cannot connect to database"
-- Verifique se a `DATABASE_URL` está correta
-- Confirme que o IP do Vercel está permitido no Neon.tech
+### Erro 404 no Vercel
+**Solução:** Verifique se o Root Directory está como `frontend`
 
-### Erro: "404 Not Found" ao chamar API
-- Verifique se `VITE_API_URL` está configurado
-- Confirme que as rotas no `vercel.json` estão corretas
+### Erro de CORS
+**Solução:** No backend, configure CORS para aceitar o domínio do Vercel:
+```javascript
+// backend/src/server.js
+app.use(cors({
+  origin: 'https://spoti-fly-xxx.vercel.app'
+}));
+```
 
-### Frontend não carrega
-- Verifique se o build foi bem-sucedido
-- Olhe os logs no Vercel Dashboard
+### Backend não conecta ao banco
+**Solução:** Verifique se a `DATABASE_URL` está correta no Render
 
 ---
 
-## 🌐 URLs Importantes
+## 📊 Custos
 
-- **Vercel Dashboard:** https://vercel.com/dashboard
-- **Neon Console:** https://console.neon.tech
-- **GitHub Repo:** https://github.com/imagalhaess/spoti-fly
+| Serviço | Plano Grátis | Limite |
+|---------|--------------|--------|
+| **Vercel** | ✅ Grátis | 100GB banda/mês |
+| **Render** | ✅ Grátis | 750h/mês |
+| **Neon** | ✅ Grátis | 0.5GB storage |
+
+**Total: R$ 0,00/mês** 💰
 
 ---
 
-**Seu app ficará disponível em:**
-```
-Frontend: https://spoti-fly.vercel.app
-Backend:  https://spoti-fly.vercel.app/api
+## 🔄 Atualizações Futuras
+
+Sempre que você der push no GitHub:
+- ✅ Frontend faz redeploy automático (Vercel)
+- ✅ Backend faz redeploy automático (Render)
+
+```bash
+git add .
+git commit -m "sua mensagem"
+git push origin main
 ```
 
-🎉 **Pronto para o mundo!**
+---
 
+## 📝 URLs Finais
+
+Anote seus endereços:
+
+```
+Frontend: https://spoti-fly-xxx.vercel.app
+Backend:  https://spoti-fly-backend-xxx.onrender.com
+Banco:    Neon.tech Dashboard
+```
+
+🎉 **Seu app está no ar!**
