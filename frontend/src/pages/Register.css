@@ -1,8 +1,8 @@
-/* Estilos da página de Registro - similar ao Login mas com identidade própria */
+/* Estilos da página de Registro */
 
 .register-page {
   min-height: 100vh;
-  background: linear-gradient(135deg, #0a0a0a 0%, #121212 50%, #1a1a1a 100%);
+  background: linear-gradient(135deg, #0a0a0a 0%, #2C3E50 50%, #1a1a1a 100%);
 }
 
 .register-container {
@@ -14,13 +14,14 @@
 }
 
 .register-card {
-  background: linear-gradient(145deg, #282828 0%, #1a1a1a 100%);
+  background: linear-gradient(145deg, var(--bg-card) 0%, var(--bg-dark-secondary) 100%);
   padding: 3rem;
-  border-radius: 16px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-xl);
   width: 100%;
   max-width: 450px;
   animation: slideUp 0.5s ease;
+  border: 1px solid rgba(78, 205, 196, 0.15);
 }
 
 @keyframes slideUp {
@@ -43,14 +44,15 @@
   color: white;
   font-size: 2rem;
   margin-bottom: 0.5rem;
-  background: linear-gradient(135deg, #1db954 0%, #1ed760 100%);
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  font-weight: 700;
 }
 
 .register-header p {
-  color: #b3b3b3;
+  color: var(--text-secondary);
   font-size: 1rem;
   margin: 0;
 }
@@ -62,22 +64,22 @@
 .register-footer {
   text-align: center;
   padding-top: 1.5rem;
-  border-top: 1px solid #3a3a3a;
+  border-top: 1px solid rgba(78, 205, 196, 0.1);
 }
 
 .register-footer p {
-  color: #b3b3b3;
+  color: var(--text-secondary);
   margin: 0;
 }
 
 .register-link {
-  color: #1db954;
+  color: var(--color-primary);
   font-weight: 600;
-  transition: color 0.3s ease;
+  transition: color var(--transition-fast);
 }
 
 .register-link:hover {
-  color: #1ed760;
+  color: var(--color-primary-light);
   text-decoration: underline;
 }
 

@@ -42,7 +42,7 @@ export default function Login() {
       <div className="login-container">
         <div className="login-card">
           <div className="login-header">
-            <h1>Bem-vindo de volta</h1>
+            <h1>Boas-vindas</h1>
             <p>Faça login para acessar suas playlists</p>
           </div>
 
