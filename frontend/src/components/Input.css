@@ -1,0 +1,84 @@
+/* Estilos do componente Input */
+
+.input-group {
+  margin-bottom: 1.5rem;
+  /* Espaço entre os inputs */
+}
+
+.input-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #b3b3b3;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.input-required {
+  color: #ff4757;
+  /* Asterisco vermelho para campos obrigatórios */
+}
+
+.input-container {
+  position: relative;
+  /* Permite posicionar o ícone de forma absoluta */
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  left: 1rem;
+  font-size: 1.2rem;
+  color: #666;
+  pointer-events: none;
+  /* O ícone não interfere com cliques no input */
+}
+
+.input-field {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  background-color: #2a2a2a;
+  border: 2px solid #3a3a3a;
+  border-radius: 8px;
+  color: white;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+/* Input com ícone tem padding extra à esquerda */
+.input-with-icon {
+  padding-left: 3rem;
+}
+
+/* Efeito ao focar no input */
+.input-field:focus {
+  outline: none;
+  border-color: #1db954;
+  /* Verde Spotify */
+  background-color: #1a1a1a;
+  box-shadow: 0 0 0 3px rgba(29, 185, 84, 0.1);
+  /* Brilho verde suave */
+}
+
+/* Placeholder */
+.input-field::placeholder {
+  color: #666;
+}
+
+/* Efeito hover */
+.input-field:hover {
+  border-color: #4a4a4a;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .input-field {
+    padding: 0.8rem 0.9rem;
+    font-size: 0.95rem;
+  }
+
+  .input-with-icon {
+    padding-left: 2.8rem;
+  }
+}

@@ -1,0 +1,288 @@
+/* Estilos da página de Detalhes da Playlist */
+
+.playlist-detalhes-page {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #1a1a1a 0%, #121212 100%);
+}
+
+.playlist-detalhes-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* Cabeçalho */
+.playlist-detalhes-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.playlist-detalhes-title {
+  flex: 1;
+  text-align: center;
+  color: white;
+  font-size: 2rem;
+  margin: 0;
+}
+
+/* ===================================
+   LISTA DE MÚSICAS
+   =================================== */
+
+.musicas-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Card de cada música */
+.musica-card {
+  background: linear-gradient(145deg, #282828 0%, #1a1a1a 100%);
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  transition: all 0.3s ease;
+  animation: fadeIn 0.5s ease;
+}
+
+.musica-card:hover {
+  background: linear-gradient(145deg, #2a2a2a 0%, #1c1c1c 100%);
+  transform: translateX(5px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+/* Número da música */
+.musica-numero {
+  color: #b3b3b3;
+  font-size: 1.5rem;
+  font-weight: 700;
+  min-width: 40px;
+  text-align: center;
+}
+
+/* Capa do álbum */
+.musica-cover {
+  width: 80px;
+  height: 80px;
+  border-radius: 8px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.musica-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.musica-cover-placeholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #1db954 0%, #1ed760 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+}
+
+/* Informações da música */
+.musica-info {
+  flex: 1;
+  min-width: 0;
+  /* Permite que o texto seja truncado */
+}
+
+.musica-titulo {
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin: 0 0 0.3rem 0;
+  /* Trunca o texto se for muito longo */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.musica-artista {
+  color: #b3b3b3;
+  font-size: 1rem;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Player de áudio */
+.musica-player {
+  flex-shrink: 0;
+}
+
+.musica-player audio {
+  height: 40px;
+  /* Customiza o player */
+}
+
+.musica-no-preview {
+  color: #666;
+  font-size: 0.9rem;
+  font-style: italic;
+  flex-shrink: 0;
+}
+
+/* ===================================
+   ESTADOS (LOADING E VAZIO)
+   =================================== */
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  gap: 1.5rem;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid #282828;
+  border-top: 4px solid #1db954;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  text-align: center;
+  padding: 3rem;
+}
+
+.empty-state-icon {
+  font-size: 5rem;
+  margin-bottom: 1.5rem;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+.empty-state h2 {
+  color: white;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.empty-state p {
+  color: #b3b3b3;
+  font-size: 1.1rem;
+  max-width: 500px;
+  margin-bottom: 2rem;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===================================
+   RESPONSIVIDADE
+   =================================== */
+
+@media (max-width: 768px) {
+  .playlist-detalhes-container {
+    padding: 1.5rem;
+  }
+
+  .playlist-detalhes-header {
+    flex-direction: column;
+  }
+
+  .playlist-detalhes-title {
+    font-size: 1.75rem;
+  }
+
+  .musica-card {
+    flex-wrap: wrap;
+    padding: 1rem;
+  }
+
+  .musica-player audio {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .playlist-detalhes-container {
+    padding: 1rem;
+  }
+
+  .playlist-detalhes-title {
+    font-size: 1.5rem;
+  }
+
+  .musica-card {
+    gap: 1rem;
+  }
+
+  .musica-numero {
+    font-size: 1.2rem;
+    min-width: 30px;
+  }
+
+  .musica-cover {
+    width: 60px;
+    height: 60px;
+  }
+
+  .musica-titulo {
+    font-size: 1rem;
+  }
+
+  .musica-artista {
+    font-size: 0.9rem;
+  }
+
+  .empty-state {
+    padding: 2rem 1rem;
+  }
+
+  .empty-state-icon {
+    font-size: 4rem;
+  }
+
+  .empty-state h2 {
+    font-size: 1.5rem;
+  }
+}

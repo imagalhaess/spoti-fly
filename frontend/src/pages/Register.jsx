@@ -1,18 +1,29 @@
+// Página de Registro - totalmente redesenhada
+
 import { useState } from "react";
 import api from "../services/api";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import Navbar from "../components/Navbar";
+import Input from "../components/Input";
+import Button from "../components/Button";
+import "./Register.css";
 
 export default function Register() {
+  // Estados para armazenar dados do formulário
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  // Função responsável por lidar com o envio do formulário de registro
+  // Função que é executada quando o usuário envia o formulário
   async function handleRegister(e) {
-    e.preventDefault();
+    e.preventDefault(); // Previne recarregar a página
+
+    setLoading(true);
 
     try {
+      // Faz a requisição para criar novo usuário
       const response = await api.post("/usuarios/register", {
         nome,
         email,
@@ -21,65 +32,105 @@ export default function Register() {
 
       const token = response.data.token;
 
-      // Armazena o token no localStorage para manter o usuário logado
+      // Salva o token e redireciona para home
       localStorage.setItem("token", token);
-
-      // Redireciona para a página principal após o registro
       navigate("/");
     } catch (error) {
-      // Estrutura clara de tratamento de erro por tipo e status HTTP
+      // Tratamento de erro detalhado
       if (error.response) {
         const status = error.response.status;
         const msg = error.response.data?.error || "Erro desconhecido.";
 
         if (status === 400) {
-          alert("Preencha todos os campos.");
+          alert("Preencha todos os campos corretamente.");
         } else if (status === 409) {
-          alert(
-            "Este e-mail já está cadastrado. Tente fazer login ou use outro."
-          );
+          alert("Este e-mail já está cadastrado. Tente fazer login.");
         } else if (status === 500) {
-          alert("Erro interno do servidor. Tente novamente mais tarde.");
+          alert("Erro no servidor. Tente novamente mais tarde.");
         } else {
           alert(`Erro ${status}: ${msg}`);
         }
       } else if (error.request) {
-        alert(
-          "Servidor não está respondendo. Verifique se o backend está rodando."
-        );
+        alert("Servidor não está respondendo. Verifique sua conexão.");
       } else {
         alert("Erro inesperado ao registrar. Tente novamente.");
       }
+    } finally {
+      setLoading(false);
     }
   }
 
   return (
-    <div>
-      <h1>Registro</h1>
-      <form onSubmit={handleRegister}>
-        {/* Campos controlados para nome, email e senha */}
-        <input
-          type="text"
-          placeholder="Nome"
-          value={nome}
-          onChange={(e) => setNome(e.target.value)}
-        />
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="Senha"
-          value={senha}
-          onChange={(e) => setSenha(e.target.value)}
-        />
+    <div className="register-page">
+      {/* Navbar sem botão de logout */}
+      <Navbar showLogout={false} />
 
-        {/* Botão de envio */}
-        <button type="submit">Cadastrar</button>
-      </form>
+      {/* Container centralizado do formulário */}
+      <div className="register-container">
+        <div className="register-card">
+          {/* Cabeçalho */}
+          <div className="register-header">
+            <h1>Crie sua conta</h1>
+            <p>Junte-se ao Spotifly e organize suas músicas favoritas</p>
+          </div>
+
+          {/* Formulário */}
+          <form onSubmit={handleRegister} className="register-form">
+            {/* Campo Nome */}
+            <Input
+              label="Nome"
+              type="text"
+              placeholder="Seu nome completo"
+              icon="👤"
+              value={nome}
+              onChange={(e) => setNome(e.target.value)}
+              required
+            />
+
+            {/* Campo Email */}
+            <Input
+              label="Email"
+              type="email"
+              placeholder="seu@email.com"
+              icon="📧"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+
+            {/* Campo Senha */}
+            <Input
+              label="Senha"
+              type="password"
+              placeholder="Mínimo 6 caracteres"
+              icon="🔒"
+              value={senha}
+              onChange={(e) => setSenha(e.target.value)}
+              required
+            />
+
+            {/* Botão de registro */}
+            <Button
+              type="submit"
+              variant="primary"
+              fullWidth
+              disabled={loading}
+            >
+              {loading ? "Criando conta..." : "Criar Conta"}
+            </Button>
+          </form>
+
+          {/* Link para login */}
+          <div className="register-footer">
+            <p>
+              Já tem uma conta?{" "}
+              <Link to="/login" className="register-link">
+                Faça login
+              </Link>
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

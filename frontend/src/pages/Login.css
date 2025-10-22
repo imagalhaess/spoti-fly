@@ -1,0 +1,125 @@
+/* Estilos da página de Login */
+
+.login-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1a1a1a 0%, #121212 50%, #0a0a0a 100%);
+}
+
+/* Container que centraliza o formulário */
+.login-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 80px);
+  /* 80px é a altura aproximada da navbar */
+  padding: 2rem;
+}
+
+/* Card do formulário */
+.login-card {
+  background: linear-gradient(145deg, #282828 0%, #1a1a1a 100%);
+  padding: 3rem;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  width: 100%;
+  max-width: 450px;
+  animation: slideUp 0.5s ease;
+  /* Animação de entrada */
+}
+
+/* Animação de entrada - card sobe suavemente */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Cabeçalho do formulário */
+.login-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.login-header h1 {
+  color: white;
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(135deg, #1db954 0%, #1ed760 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  /* Texto com gradiente verde */
+}
+
+.login-header p {
+  color: #b3b3b3;
+  font-size: 1rem;
+  margin: 0;
+}
+
+/* Formulário */
+.login-form {
+  margin-bottom: 1.5rem;
+}
+
+/* Rodapé com link de registro */
+.login-footer {
+  text-align: center;
+  padding-top: 1.5rem;
+  border-top: 1px solid #3a3a3a;
+}
+
+.login-footer p {
+  color: #b3b3b3;
+  margin: 0;
+}
+
+.login-link {
+  color: #1db954;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.login-link:hover {
+  color: #1ed760;
+  text-decoration: underline;
+}
+
+/* ===================================
+   RESPONSIVIDADE
+   =================================== */
+
+/* Tablets */
+@media (max-width: 768px) {
+  .login-card {
+    padding: 2rem;
+  }
+
+  .login-header h1 {
+    font-size: 1.75rem;
+  }
+}
+
+/* Celulares */
+@media (max-width: 480px) {
+  .login-container {
+    padding: 1rem;
+  }
+
+  .login-card {
+    padding: 1.5rem;
+  }
+
+  .login-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .login-header p {
+    font-size: 0.9rem;
+  }
+}

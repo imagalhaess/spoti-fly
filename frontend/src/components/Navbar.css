@@ -1,0 +1,106 @@
+/* Estilos da barra de navegação */
+
+.navbar {
+  background: linear-gradient(135deg, #1db954 0%, #1ed760 100%);
+  /* Gradiente verde estilo Spotify */
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  /* Sombra para dar profundidade */
+  position: sticky;
+  /* Fica fixo no topo ao rolar a página */
+  top: 0;
+  z-index: 1000;
+  /* Garante que fica acima de outros elementos */
+}
+
+.navbar-container {
+  max-width: 1200px;
+  /* Limita a largura em telas grandes */
+  margin: 0 auto;
+  /* Centraliza o conteúdo */
+  display: flex;
+  justify-content: space-between;
+  /* Logo à esquerda, botão à direita */
+  align-items: center;
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  /* Espaço entre o ícone e o título */
+}
+
+.navbar-logo {
+  font-size: 2rem;
+  /* Tamanho do emoji */
+  animation: float 3s ease-in-out infinite;
+  /* Animação suave de flutuação */
+}
+
+/* Animação que faz o logo "flutuar" */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.navbar-title {
+  color: white;
+  font-size: 1.8rem;
+  margin: 0;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  /* Deixa as letras mais próximas para um visual moderno */
+}
+
+.btn-logout {
+  background-color: rgba(255, 255, 255, 0.2);
+  /* Fundo branco transparente */
+  color: white;
+  border: 2px solid white;
+  padding: 0.6rem 1.5rem;
+  border-radius: 25px;
+  /* Botão arredondado */
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  /* Transição suave para hover */
+}
+
+.btn-logout:hover {
+  background-color: white;
+  color: #1db954;
+  transform: translateY(-2px);
+  /* Levanta ligeiramente ao passar o mouse */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.btn-logout:active {
+  transform: translateY(0);
+  /* Volta ao normal ao clicar */
+}
+
+/* Responsividade para celulares */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 1rem 1rem;
+  }
+
+  .navbar-title {
+    font-size: 1.5rem;
+  }
+
+  .navbar-logo {
+    font-size: 1.5rem;
+  }
+
+  .btn-logout {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+}

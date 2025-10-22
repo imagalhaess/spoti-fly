@@ -1,27 +1,304 @@
-html, body, #root {
+/* ===================================
+   SISTEMA DE DESIGN - VARIÁVEIS GLOBAIS
+   =================================== */
+
+/* Definindo variáveis CSS para usar em todo o projeto */
+:root {
+  /* Cores principais */
+  --color-primary: #1db954; /* Verde Spotify */
+  --color-primary-light: #1ed760;
+  --color-primary-dark: #169c46;
+
+  /* Cores de fundo */
+  --bg-dark: #121212;
+  --bg-dark-secondary: #181818;
+  --bg-card: #282828;
+  --bg-card-hover: #2a2a2a;
+
+  /* Cores de texto */
+  --text-primary: #ffffff;
+  --text-secondary: #b3b3b3;
+  --text-muted: #666666;
+
+  /* Cores de status */
+  --color-danger: #dc3545;
+  --color-success: #1db954;
+  --color-info: #007bff;
+  --color-warning: #ffc107;
+
+  /* Espaçamentos */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+
+  /* Bordas */
+  --border-radius-sm: 4px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 12px;
+  --border-radius-xl: 16px;
+  --border-radius-full: 9999px;
+
+  /* Sombras */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 10px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 8px 20px rgba(0, 0, 0, 0.4);
+  --shadow-xl: 0 12px 24px rgba(0, 0, 0, 0.5);
+
+  /* Transições */
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
+}
+
+/* ===================================
+   RESET E ESTILOS BASE
+   =================================== */
+
+/* Reset básico para todos os elementos */
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
-  height: 100%; /* Isso é MUITO IMPORTANTE! */
-  width: 100%;
   box-sizing: border-box;
-  font-family: Arial, sans-serif;
-  background-color: #1a1a1a;
-  color: #f0f0f0;
-  overflow-x: hidden;
-  position: relative; /* ou static, mas relative é mais seguro */
-}
-/* Estilo para o container principal do conteúdo da página */
-.main-content-container {
-  padding: 20px; /* Espaçamento interno para o conteúdo */
 }
 
-/* Estilos para listas (ul) e itens de lista (li) para melhor visualização */
+html {
+  font-size: 16px;
+  /* Base para rem */
+  scroll-behavior: smooth;
+  /* Scroll suave */
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  /* Fonte mais suave no Mac */
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--bg-dark);
+  color: var(--text-primary);
+  line-height: 1.6;
+  overflow-x: hidden;
+  /* Previne scroll horizontal */
+}
+
+/* ===================================
+   CONTAINER PRINCIPAL
+   =================================== */
+
+.main-content-container {
+  min-height: 100vh;
+  /* Altura mínima da tela toda */
+  background: linear-gradient(180deg, #1a1a1a 0%, #121212 100%);
+}
+
+/* Container para centralizar conteúdo */
+.container {
+  max-width: 1200px;
+  /* Largura máxima */
+  margin: 0 auto;
+  /* Centraliza */
+  padding: var(--spacing-xl);
+}
+
+/* ===================================
+   TIPOGRAFIA
+   =================================== */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: var(--spacing-md);
+  color: var(--text-primary);
+}
+
+h1 {
+  font-size: 2.5rem;
+}
+
+h2 {
+  font-size: 2rem;
+}
+
+h3 {
+  font-size: 1.5rem;
+}
+
+p {
+  margin-bottom: var(--spacing-md);
+  color: var(--text-secondary);
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--color-primary-light);
+}
+
+/* ===================================
+   LISTAS
+   =================================== */
+
 ul {
-  list-style: none; /* Remove bolinhas da lista */
+  list-style: none;
   padding: 0;
   margin: 0;
 }
 
-li {
-  margin-bottom: 10px;
+/* ===================================
+   UTILITÁRIOS
+   =================================== */
+
+/* Grid responsivo */
+.grid {
+  display: grid;
+  gap: var(--spacing-lg);
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  /* Cria colunas automáticas que se ajustam */
+}
+
+/* Flexbox utilitários */
+.flex {
+  display: flex;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Espaçamentos */
+.mt-1 {
+  margin-top: var(--spacing-md);
+}
+.mt-2 {
+  margin-top: var(--spacing-lg);
+}
+.mb-1 {
+  margin-bottom: var(--spacing-md);
+}
+.mb-2 {
+  margin-bottom: var(--spacing-lg);
+}
+
+/* Texto */
+.text-center {
+  text-align: center;
+}
+
+.text-muted {
+  color: var(--text-muted);
+}
+
+/* ===================================
+   ANIMAÇÕES GLOBAIS
+   =================================== */
+
+/* Fade in - aparecer suavemente */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease;
+}
+
+/* ===================================
+   SCROLLBAR CUSTOMIZADA (Webkit)
+   =================================== */
+
+/* Barra de rolagem estilizada */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-dark);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--bg-card);
+  border-radius: var(--border-radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary);
+}
+
+/* ===================================
+   RESPONSIVIDADE
+   =================================== */
+
+/* Tablets */
+@media (max-width: 768px) {
+  html {
+    font-size: 14px;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.75rem;
+  }
+
+  .container {
+    padding: var(--spacing-lg);
+  }
+
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+}
+
+/* Celulares */
+@media (max-width: 480px) {
+  html {
+    font-size: 14px;
+  }
+
+  .container {
+    padding: var(--spacing-md);
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    /* Uma coluna em telas pequenas */
+  }
 }

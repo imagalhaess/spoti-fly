@@ -1,17 +1,28 @@
+// Página de Login - totalmente redesenhada com componentes modernos
+
 import { useState } from "react";
 import api from "../services/api";
 import { useNavigate, Link } from "react-router-dom";
+import Navbar from "../components/Navbar";
+import Input from "../components/Input";
+import Button from "../components/Button";
+import "./Login.css";
 
 export default function Login() {
+  // Estados para armazenar email e senha digitados pelo usuário
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
+  const [loading, setLoading] = useState(false); // Estado para botão de carregamento
   const navigate = useNavigate();
 
-  // Lida com o envio do formulário de login
+  // Função que é executada quando o usuário envia o formulário
   async function handleLogin(e) {
-    e.preventDefault();
+    e.preventDefault(); // Previne o comportamento padrão de recarregar a página
+
+    setLoading(true); // Mostra estado de carregamento
 
     try {
+      // Faz a requisição para o backend
       const response = await api.post("/usuarios/login", {
         email,
         senha,
@@ -19,47 +30,80 @@ export default function Login() {
 
       const token = response.data.token;
 
-      // O token é armazenado no localStorage para manter a sessão ativa
+      // Salva o token no localStorage para manter o usuário logado
       localStorage.setItem("token", token);
 
-      // Redireciona o usuário para a página inicial após login
+      // Redireciona para a página inicial
       navigate("/");
     } catch (error) {
-      // Alerta simples ao usuário. Pode ser melhorado com um componente visual de erro
+      // Em caso de erro, mostra um alerta ao usuário
       alert("Login falhou. Verifique suas credenciais.");
-
-      // Útil em ambiente de desenvolvimento. Em produção, evite exibir erros no console
-      console.log(error.response?.data);
       console.error("Erro ao fazer login:", error);
+    } finally {
+      setLoading(false); // Remove estado de carregamento
     }
   }
 
   return (
-    <div>
-      <h1> Login </h1>
-      <form onSubmit={handleLogin}>
-        {/* Inputs controlados para manter o estado local sincronizado com os campos */}
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="Senha"
-          value={senha}
-          onChange={(e) => setSenha(e.target.value)}
-        />
+    <div className="login-page">
+      {/* Navbar sem botão de logout */}
+      <Navbar showLogout={false} />
 
-        {/* Botão de envio simples */}
-        <button type="submit">Entrar</button>
-      </form>
+      {/* Container centralizado do formulário */}
+      <div className="login-container">
+        <div className="login-card">
+          {/* Cabeçalho do formulário */}
+          <div className="login-header">
+            <h1>Bem-vindo de volta!</h1>
+            <p>Faça login para acessar suas playlists</p>
+          </div>
 
-      {/* Link de navegação para usuários ainda não registrados */}
-      <p>
-        Não tem uma conta? <Link to="/register">Registre-se</Link>
-      </p>
+          {/* Formulário */}
+          <form onSubmit={handleLogin} className="login-form">
+            {/* Campo de Email usando nosso componente Input */}
+            <Input
+              label="Email"
+              type="email"
+              placeholder="seu@email.com"
+              icon="📧"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+
+            {/* Campo de Senha */}
+            <Input
+              label="Senha"
+              type="password"
+              placeholder="Digite sua senha"
+              icon="🔒"
+              value={senha}
+              onChange={(e) => setSenha(e.target.value)}
+              required
+            />
+
+            {/* Botão de login com estado de carregamento */}
+            <Button
+              type="submit"
+              variant="primary"
+              fullWidth
+              disabled={loading}
+            >
+              {loading ? "Entrando..." : "Entrar"}
+            </Button>
+          </form>
+
+          {/* Link para página de registro */}
+          <div className="login-footer">
+            <p>
+              Não tem uma conta?{" "}
+              <Link to="/register" className="login-link">
+                Registre-se gratuitamente
+              </Link>
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

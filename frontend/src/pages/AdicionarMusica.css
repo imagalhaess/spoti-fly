@@ -1,0 +1,270 @@
+/* Estilos da página Adicionar Música */
+
+.adicionar-musica-page {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #1a1a1a 0%, #121212 100%);
+}
+
+.adicionar-musica-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* Cabeçalho */
+.adicionar-musica-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.adicionar-musica-title {
+  flex: 1;
+  text-align: center;
+  color: white;
+  font-size: 2rem;
+  margin: 0;
+}
+
+/* Formulário de busca */
+.busca-form {
+  background: linear-gradient(145deg, #282828 0%, #1a1a1a 100%);
+  padding: 2rem;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Mensagens de feedback */
+.mensagem {
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.mensagem-erro {
+  background: rgba(220, 53, 69, 0.2);
+  border: 2px solid #dc3545;
+  color: #ff6b7a;
+}
+
+.mensagem-sucesso {
+  background: rgba(29, 185, 84, 0.2);
+  border: 2px solid #1db954;
+  color: #1ed760;
+}
+
+/* ===================================
+   RESULTADOS DA BUSCA
+   =================================== */
+
+.resultados-container {
+  animation: fadeIn 0.5s ease;
+}
+
+.resultados-title {
+  color: white;
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.resultados-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Card de cada resultado */
+.resultado-card {
+  background: linear-gradient(145deg, #282828 0%, #1a1a1a 100%);
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.resultado-card:hover {
+  background: linear-gradient(145deg, #2a2a2a 0%, #1c1c1c 100%);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* Capa do álbum */
+.resultado-cover {
+  width: 80px;
+  height: 80px;
+  border-radius: 8px;
+  object-fit: cover;
+  flex-shrink: 0;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Informações da música */
+.resultado-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.resultado-titulo {
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0 0 0.3rem 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.resultado-artista {
+  color: #1db954;
+  font-size: 1rem;
+  margin: 0 0 0.2rem 0;
+  font-weight: 500;
+}
+
+.resultado-album {
+  color: #b3b3b3;
+  font-size: 0.9rem;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ===================================
+   ESTADO VAZIO
+   =================================== */
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  text-align: center;
+  padding: 3rem;
+}
+
+.empty-state-icon {
+  font-size: 5rem;
+  margin-bottom: 1.5rem;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+.empty-state h2 {
+  color: white;
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+
+.empty-state p {
+  color: #b3b3b3;
+  font-size: 1rem;
+  max-width: 500px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===================================
+   RESPONSIVIDADE
+   =================================== */
+
+@media (max-width: 768px) {
+  .adicionar-musica-container {
+    padding: 1.5rem;
+  }
+
+  .adicionar-musica-header {
+    flex-direction: column;
+  }
+
+  .adicionar-musica-title {
+    font-size: 1.75rem;
+  }
+
+  .busca-form {
+    padding: 1.5rem;
+  }
+
+  .resultado-card {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 480px) {
+  .adicionar-musica-container {
+    padding: 1rem;
+  }
+
+  .adicionar-musica-title {
+    font-size: 1.5rem;
+  }
+
+  .busca-form {
+    padding: 1rem;
+  }
+
+  .resultado-cover {
+    width: 60px;
+    height: 60px;
+  }
+
+  .resultado-titulo {
+    font-size: 1rem;
+  }
+
+  .resultado-artista {
+    font-size: 0.9rem;
+  }
+
+  .resultado-album {
+    font-size: 0.85rem;
+  }
+
+  .empty-state {
+    padding: 2rem 1rem;
+  }
+
+  .empty-state-icon {
+    font-size: 4rem;
+  }
+
+  .empty-state h2 {
+    font-size: 1.5rem;
+  }
+}

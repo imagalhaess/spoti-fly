@@ -1,70 +1,122 @@
-import React, { useEffect, useState } from "react";
+// Página de detalhes da playlist - mostra todas as músicas
+
+import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import api from "../services/api";
+import Navbar from "../components/Navbar";
+import Button from "../components/Button";
+import "./PlaylistDetalhes.css";
 
-// Componente para exibir os detalhes de uma playlist e suas músicas
-
-function PlaylistDetalhes() {
-  const { id } = useParams(); // Pega o id da playlist pela URL
+export default function PlaylistDetalhes() {
+  const { id } = useParams(); // Pega o ID da playlist da URL
   const [musicas, setMusicas] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [playlistNome, setPlaylistNome] = useState("");
   const navigate = useNavigate();
 
+  // Busca as músicas quando o componente carrega
   useEffect(() => {
     api
       .get(`/playlists/${id}/musicas`)
       .then((res) => {
-        // Verifica se veio dentro de res.data.musicas ou direto
+        // Verifica a estrutura da resposta
         if (Array.isArray(res.data)) {
           setMusicas(res.data);
         } else if (Array.isArray(res.data.musicas)) {
           setMusicas(res.data.musicas);
         } else {
-          setMusicas([]); // fallback seguro
+          setMusicas([]);
         }
+        setLoading(false);
       })
       .catch((err) => {
         console.error("Erro ao buscar músicas:", err);
-        setMusicas([]); // garante que pelo menos evite quebra no render
+        setMusicas([]);
+        setLoading(false);
       });
   }, [id]);
 
   return (
-    <div style={{ padding: "20px" }}>
-      <button
-        onClick={() => navigate("/")}
-        style={{
-          backgroundColor: "#007bff",
-          color: "white",
-          padding: "8px 15px",
-          border: "none",
-          borderRadius: "5px",
-          cursor: "pointer",
-          marginBottom: "20px",
-        }}
-      >
-        ← Voltar para Home
-      </button>
+    <div className="playlist-detalhes-page">
+      <Navbar showLogout={true} />
 
-      <h1>Músicas da Playlist</h1>
-      {Array.isArray(musicas) && musicas.length === 0 && (
-        <p>Nenhuma música encontrada.</p>
-      )}
+      <div className="playlist-detalhes-container">
+        {/* Cabeçalho com botão voltar */}
+        <div className="playlist-detalhes-header">
+          <Button variant="secondary" onClick={() => navigate("/")}>
+            ← Voltar
+          </Button>
 
-      {Array.isArray(musicas) &&
-        musicas.map((musica) => (
-          <div key={musica.id} style={{ marginBottom: "20px" }}>
-            <p>
-              <strong>{musica.titulo}</strong> — {musica.artista}
-            </p>
-            {musica.preview_url ? (
-              <audio controls src={musica.preview_url}></audio>
-            ) : (
-              <p style={{ fontStyle: "italic" }}>Prévia não disponível</p>
-            )}
+          <h1 className="playlist-detalhes-title">Músicas da Playlist</h1>
+
+          <Button
+            variant="primary"
+            onClick={() => navigate(`/playlists/${id}/adicionar-musica`)}
+          >
+            + Adicionar Música
+          </Button>
+        </div>
+
+        {/* Conteúdo */}
+        {loading ? (
+          // Estado de carregamento
+          <div className="loading-container">
+            <div className="spinner"></div>
+            <p>Carregando músicas...</p>
           </div>
-        ))}
+        ) : musicas.length === 0 ? (
+          // Estado vazio
+          <div className="empty-state">
+            <span className="empty-state-icon">🎧</span>
+            <h2>Nenhuma música ainda</h2>
+            <p>Adicione músicas para começar a montar sua playlist!</p>
+            <Button
+              variant="primary"
+              onClick={() => navigate(`/playlists/${id}/adicionar-musica`)}
+            >
+              + Adicionar Primeira Música
+            </Button>
+          </div>
+        ) : (
+          // Lista de músicas
+          <div className="musicas-list">
+            {musicas.map((musica, index) => (
+              <div key={musica.id} className="musica-card">
+                {/* Número da música */}
+                <div className="musica-numero">{index + 1}</div>
+
+                {/* Capa do álbum ou placeholder */}
+                <div className="musica-cover">
+                  {musica.capa_url ? (
+                    <img src={musica.capa_url} alt={musica.titulo} />
+                  ) : (
+                    <div className="musica-cover-placeholder">🎵</div>
+                  )}
+                </div>
+
+                {/* Informações da música */}
+                <div className="musica-info">
+                  <h3 className="musica-titulo">{musica.titulo}</h3>
+                  <p className="musica-artista">{musica.artista}</p>
+                </div>
+
+                {/* Player de áudio (se disponível) */}
+                {musica.preview_url ? (
+                  <div className="musica-player">
+                    <audio controls src={musica.preview_url}>
+                      Seu navegador não suporta áudio.
+                    </audio>
+                  </div>
+                ) : (
+                  <div className="musica-no-preview">
+                    <span>Prévia não disponível</span>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
-
-export default PlaylistDetalhes;

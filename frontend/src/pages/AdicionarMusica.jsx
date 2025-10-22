@@ -1,143 +1,192 @@
-import { useState } from 'react';
-import api from '../services/api';
-import { useParams, useNavigate } from 'react-router-dom';
+// Página para buscar e adicionar músicas à playlist
+
+import { useState } from "react";
+import api from "../services/api";
+import { useParams, useNavigate } from "react-router-dom";
+import Navbar from "../components/Navbar";
+import Input from "../components/Input";
+import Button from "../components/Button";
+import "./AdicionarMusica.css";
 
 export default function AdicionarMusica() {
-  const [busca, setBusca] = useState('');
+  const [busca, setBusca] = useState("");
   const [resultados, setResultados] = useState([]);
-  const { id } = useParams();
+  const [loading, setLoading] = useState(false);
+  const [mensagemErro, setMensagemErro] = useState("");
+  const [mensagemSucesso, setMensagemSucesso] = useState("");
+  const { id } = useParams(); // ID da playlist
   const navigate = useNavigate();
-  const [mensagemErro, setMensagemErro] = useState('');
-  const [mensagemSucesso, setMensagemSucesso] = useState('');
 
-// Função para buscar músicas na API do Deezer
-  async function buscarMusicas(e) { 
+  // Função para buscar músicas na API do Deezer através do backend
+  async function buscarMusicas(e) {
     e.preventDefault();
-    setMensagemErro('');
-    setMensagemSucesso('');
+    setMensagemErro("");
+    setMensagemSucesso("");
 
     if (!busca.trim()) {
-      setMensagemErro('Por favor, digite o nome da música para buscar.');
+      setMensagemErro("Digite o nome da música ou artista para buscar.");
       return;
     }
 
+    setLoading(true);
+
     try {
+      // Chama o backend que se conecta ao Deezer
       const resposta = await api.get(`/search?q=${encodeURIComponent(busca)}`);
 
       if (resposta.data && Array.isArray(resposta.data.data)) {
-        setResultados(resposta.data.data.slice(0, 5));
+        // Pega os 5 primeiros resultados
+        setResultados(resposta.data.data.slice(0, 10));
+
         if (resposta.data.data.length === 0) {
-          setMensagemErro('Nenhuma música encontrada com o termo de busca.');
+          setMensagemErro("Nenhuma música encontrada. Tente outro termo.");
         }
       } else {
-        setMensagemErro('Resposta inesperada do servidor ao buscar músicas.');
-        console.error('Estrutura da resposta da API inesperada:', resposta.data);
+        setMensagemErro("Resposta inesperada do servidor.");
         setResultados([]);
       }
     } catch (error) {
-      console.error('Erro ao buscar músicas:', error);
-      if (error.response) {
-        setMensagemErro(`Erro ao buscar músicas: ${error.response.data.error || error.response.statusText}.`);
-      } else if (error.request) {
-        setMensagemErro('Erro de conexão: Nenhuma resposta do servidor. Verifique se o backend está online.');
-      } else {
-        setMensagemErro('Erro desconhecido ao buscar músicas. Tente novamente.');
-      }
+      console.error("Erro ao buscar músicas:", error);
+      setMensagemErro("Erro ao buscar músicas. Tente novamente.");
+    } finally {
+      setLoading(false);
     }
   }
 
   // Função para adicionar música à playlist
   async function adicionarMusica(musica) {
-    setMensagemErro('');
-    setMensagemSucesso('');
-    const token = localStorage.getItem('token');
+    setMensagemErro("");
+    setMensagemSucesso("");
+
+    const token = localStorage.getItem("token");
 
     if (!token) {
-      setMensagemErro('Você precisa estar logado para adicionar músicas.');
+      setMensagemErro("Você precisa estar logado.");
+      navigate("/login");
       return;
     }
 
     try {
-      await api.post(`/playlists/${id}/musicas`, {
-        title: musica.title,
-        artistName: musica.artist.name,
-        deezerId: musica.id,
-        coverUrl: musica.album.cover_medium,
-      }, {
-        headers: {
-          Authorization: `Bearer ${token}`,
+      await api.post(
+        `/playlists/${id}/musicas`,
+        {
+          title: musica.title,
+          artistName: musica.artist.name,
+          deezerId: musica.id,
+          coverUrl: musica.album.cover_medium,
         },
-      });
-      setMensagemSucesso(`Música "${musica.title}" adicionada à playlist com sucesso!`);
-      setResultados([]); // Limpa os resultados após adicionar a música
-      setBusca('');
-    } catch (error) {
-      console.error('Erro ao adicionar música:', error);
-      if (error.response) {
-        if (error.response.status === 409) {
-          setMensagemErro(`A música "${musica.title}" já está nesta playlist.`);
-        } else {
-          setMensagemErro(error.response.data.error || 'Erro ao adicionar música à playlist. Tente novamente.');
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
+      );
+
+      setMensagemSucesso(`✨ "${musica.title}" adicionada com sucesso!`);
+
+      // Limpa os resultados e busca
+      setTimeout(() => {
+        setResultados([]);
+        setBusca("");
+        setMensagemSucesso("");
+      }, 2000);
+    } catch (error) {
+      console.error("Erro ao adicionar música:", error);
+
+      if (error.response?.status === 409) {
+        setMensagemErro(`"${musica.title}" já está na playlist.`);
       } else {
-        setMensagemErro('Erro ao adicionar música à playlist. Tente novamente.');
+        setMensagemErro("Erro ao adicionar música. Tente novamente.");
       }
     }
   }
 
-  const handleVoltar = () => { 
-    navigate(-1);
-  };
-
   return (
-    <div>
-      <h1>Buscar e Adicionar Música à Playlist</h1>
+    <div className="adicionar-musica-page">
+      <Navbar showLogout={true} />
 
-      {/* --- Formulário de Busca --- */}
-      <form onSubmit={buscarMusicas}>
-        <input
-          type="text"
-          placeholder="Nome da Música ou Artista"
-          value={busca}
-          onChange={(e) => setBusca(e.target.value)}
-        />
-        <button type="submit">Buscar</button>
-      </form>
+      <div className="adicionar-musica-container">
+        {/* Cabeçalho */}
+        <div className="adicionar-musica-header">
+          <Button variant="secondary" onClick={() => navigate(-1)}>
+            ← Voltar
+          </Button>
 
-      {/* --- Mensagens de Erro/Sucesso --- */}
-      {mensagemErro && <p style={{ color: 'red' }}>{mensagemErro}</p>}
-      {mensagemSucesso && <p style={{ color: 'green' }}>{mensagemSucesso}</p>}
+          <h1 className="adicionar-musica-title">Adicionar Música</h1>
+        </div>
 
-      {/* --- Resultados da Busca --- */}
-      <h2>Resultados da Busca</h2>
-      {resultados.length > 0 ? (
-        <ul>
-          {resultados.map((musica) => (
-            <li key={musica.id}>
-              {musica.title} - {musica.artist.name}
-              <button onClick={() => adicionarMusica(musica)}>Adicionar à Playlist</button>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>Use a barra de busca para encontrar músicas.</p>
-      )}
+        {/* Formulário de busca */}
+        <form onSubmit={buscarMusicas} className="busca-form">
+          <Input
+            label="Buscar Música"
+            type="text"
+            placeholder="Nome da música ou artista..."
+            icon="🔍"
+            value={busca}
+            onChange={(e) => setBusca(e.target.value)}
+          />
 
-      {/* --- BOTÃO VOLTAR --- */}
-      <button
-        onClick={handleVoltar} 
-        style={{
-          marginTop: '20px',
-          padding: '8px 15px',
-          background: '#6c757d',
-          color: 'white',
-          border: 'none',
-          borderRadius: '5px',
-          cursor: 'pointer'
-        }}
-      >
-        Voltar
-      </button>
+          <Button type="submit" variant="primary" fullWidth disabled={loading}>
+            {loading ? "Buscando..." : "🔍 Buscar"}
+          </Button>
+        </form>
+
+        {/* Mensagens de feedback */}
+        {mensagemErro && (
+          <div className="mensagem mensagem-erro">{mensagemErro}</div>
+        )}
+        {mensagemSucesso && (
+          <div className="mensagem mensagem-sucesso">{mensagemSucesso}</div>
+        )}
+
+        {/* Resultados da busca */}
+        {resultados.length > 0 && (
+          <div className="resultados-container">
+            <h2 className="resultados-title">Resultados</h2>
+            <div className="resultados-list">
+              {resultados.map((musica) => (
+                <div key={musica.id} className="resultado-card">
+                  {/* Capa do álbum */}
+                  <img
+                    src={musica.album.cover_medium}
+                    alt={musica.title}
+                    className="resultado-cover"
+                  />
+
+                  {/* Informações */}
+                  <div className="resultado-info">
+                    <h3 className="resultado-titulo">{musica.title}</h3>
+                    <p className="resultado-artista">{musica.artist.name}</p>
+                    {musica.album.title && (
+                      <p className="resultado-album">{musica.album.title}</p>
+                    )}
+                  </div>
+
+                  {/* Botão adicionar */}
+                  <Button
+                    variant="success"
+                    onClick={() => adicionarMusica(musica)}
+                  >
+                    + Adicionar
+                  </Button>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Estado inicial */}
+        {resultados.length === 0 && !mensagemErro && (
+          <div className="empty-state">
+            <span className="empty-state-icon">🎵</span>
+            <h2>Busque músicas incríveis</h2>
+            <p>
+              Use a barra de busca acima para encontrar suas músicas favoritas e
+              adicioná-las à playlist
+            </p>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

@@ -1,0 +1,90 @@
+/* Estilos base do botão - todos os botões compartilham isso */
+.btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  /* Transição suave para todas as mudanças */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  /* Espaço entre ícone e texto, se houver */
+  text-decoration: none;
+  /* Para quando usar como Link */
+}
+
+.btn:hover:not(.btn-disabled) {
+  transform: translateY(-2px);
+  /* Levanta o botão ao passar o mouse */
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.btn:active:not(.btn-disabled) {
+  transform: translateY(0);
+  /* Volta ao normal ao clicar */
+}
+
+/* Variante primária - botão verde */
+.btn-primary {
+  background: linear-gradient(135deg, #1db954 0%, #1ed760 100%);
+  color: white;
+}
+
+.btn-primary:hover:not(.btn-disabled) {
+  background: linear-gradient(135deg, #1ed760 0%, #1db954 100%);
+}
+
+/* Variante secundária - botão com borda */
+.btn-secondary {
+  background: transparent;
+  color: #1db954;
+  border: 2px solid #1db954;
+}
+
+.btn-secondary:hover:not(.btn-disabled) {
+  background: #1db954;
+  color: white;
+}
+
+/* Variante de perigo - botão vermelho */
+.btn-danger {
+  background: linear-gradient(135deg, #dc3545 0%, #ff4757 100%);
+  color: white;
+}
+
+.btn-danger:hover:not(.btn-disabled) {
+  background: linear-gradient(135deg, #ff4757 0%, #dc3545 100%);
+}
+
+/* Variante de sucesso - botão azul */
+.btn-success {
+  background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+  color: white;
+}
+
+.btn-success:hover:not(.btn-disabled) {
+  background: linear-gradient(135deg, #0056b3 0%, #007bff 100%);
+}
+
+/* Botão com largura total */
+.btn-full-width {
+  width: 100%;
+}
+
+/* Botão desabilitado */
+.btn-disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .btn {
+    padding: 0.65rem 1.2rem;
+    font-size: 0.95rem;
+  }
+}
